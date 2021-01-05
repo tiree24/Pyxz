@@ -18,7 +18,10 @@ from django.urls import path
 
 from user_app.views import HomePage
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePage.as_view(), name='Home')
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
