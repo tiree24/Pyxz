@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from user_app.views import HomePage
+from user_app.views import HomePage, Profile
+from photo_app.views import AllTags
 
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomePage.as_view(), name='Home')
+    path('', HomePage.as_view(), name='Home'),
+    path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
+    path('listoftags/', AllTags.as_view(), name='Tags'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
