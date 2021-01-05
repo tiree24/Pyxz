@@ -2,8 +2,11 @@ from django.shortcuts import render
 
 from django.views import View
 
-class HomePage(View):
-    html = 'base.html'
-    def get(self, request):
+from photo_app.models import Image
 
-        return render(request, self.html, {})
+class HomePage(View):
+    html = 'homepage.html'
+    def get(self, request):
+        all_images = Image.objects.all()
+        img_urls = [img.photo for img in all_images]
+        return render(request, self.html, {'img_urls':img_urls})

@@ -9,7 +9,7 @@ class Image(models.Model):
     myuser = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=144)
     description = models.TextField(max_length=500)
-    photo = models.ImageField(upload_to='i')
+    photo = models.ImageField(upload_to='static/i')
     likes = models.ManyToManyField(MyUser, related_name='likes')
     post_time = models.DateTimeField(default=timezone.now)
     is_story = models.BooleanField()
