@@ -21,4 +21,4 @@ class Profile(View):
         user = MyUser.objects.get(id=user_id)
         user_pyxz = Image.objects.filter(myuser=user)
         pyxz_urls = [pyxz.photo for pyxz in user_pyxz]
-        return render(request, self.html, {'user':user, 'num_of_followers':len(user.following.all()), 'img_urls':pyxz_urls})
+        return render(request, self.html, {'user':user, 'num_of_followers':len(user.following.all()), 'img_urls':pyxz_urls, 'user_id':user_id})

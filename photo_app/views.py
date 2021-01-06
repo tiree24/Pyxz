@@ -14,5 +14,16 @@ class AllTags(View):
     html = 'taglist.html'
 
     def get(self, request):
+        user_id = request.user.id
         tags = Image.tags.all()
-        return render(request, self.html, {'taglist':tags})
+        return render(request, self.html, {'taglist':tags, 'user_id':user_id})
+
+class TagCategory(View):
+    html = 'tagcategory.html'
+
+    def get(self, request, tag_id):
+        user_id = request.user.id
+        tag = Image.tags.get(id=tag_id)
+        images = Image.objects.filter(tags=tag)
+        img_urls = [url.photo for url in images]
+        return render(request, self.html, {'tag':tag,'img_urls':img_urls, 'user_id':user_id}) 

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from user_app.views import HomePage, Profile
-from photo_app.views import AllTags
+from photo_app.views import AllTags, TagCategory 
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -27,4 +27,5 @@ urlpatterns = [
     path('', HomePage.as_view(), name='Home'),
     path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
+    path('tag/<int:tag_id>/', TagCategory.as_view(), name='TagSub')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
