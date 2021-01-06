@@ -15,11 +15,26 @@
             margin: 100px;
         }
         </style>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
+<script>
+    
+</script>
 
-<div class='x1'>
+<div>
     {% for url in img_urls %}
+    <button onclick="document.getElementById('{{url}}').style.display='block'" class="w3-button">
         <img class='x2' style='height:250px' src="{% static url %}" alt="My image">
+    </button>
+
+    <div id="{{url}}" class="w3-modal w3-animate-zoom">
+        <h3>Title Here: {{url}}</h3>
+        <img onclick="document.getElementById('{{url}}').style.display='none'" class='x2' style='height:250px' src="{% static url %}" alt="My image">
+        <div>comment form Here</div>
+        <div>list of comments here</div>
+    </div>
+   
+
     {% endfor %}
 </div>
 
