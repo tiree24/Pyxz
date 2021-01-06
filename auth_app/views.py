@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm
 from django.shortcuts import render, HttpResponseRedirect, reverse
+
+
 from django.views import View
 # Create your views here.
 
@@ -15,8 +17,7 @@ class LoginFormView(View):
         form = LoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = authenticate(
-                request, username=data['username'], password=data['password'])
+            user = authenticate(request, username=data['username'], password=data['password'])
             if user:
                 login(request, user)
                 return HttpResponseRedirect(request.GET.get('next', reverse('Homepage')))

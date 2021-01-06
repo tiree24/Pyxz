@@ -1,6 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
 
-
 from django.views import View
 
 from photo_app.models import Image
