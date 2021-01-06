@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect, reverse
 
 from django.views import View
 
 from photo_app.models import Image
 from user_app.models import MyUser
+
+from user_app.forms import SignUpForm
 
 class HomePage(View):
     html = 'homepage.html'
@@ -22,3 +24,29 @@ class Profile(View):
         user_pyxz = Image.objects.filter(myuser=user)
         pyxz_urls = [pyxz.photo for pyxz in user_pyxz]
         return render(request, self.html, {'user':user, 'num_of_followers':len(user.following.all()), 'img_urls':pyxz_urls, 'user_id':user_id})
+
+
+class SignUp(View):
+
+    form_class = SignUpForm
+
+    def get(self, request):
+        html = 'generic_form.html'
+        form = self.form_class
+        context = {'form': form}
+        return render(request, html, context)
+
+    def post(self, request):
+        if request.method == 'POST':
+            form = self.form_class(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            MyUser.objects.create(
+                username=data['username'],
+                first_name=data['first_name'],
+                last_name=data['last_name'],
+                email=data['email'],
+                password=data['password'],
+            )
+            return HttpResponseRedirect(reverse('Home'))
+
