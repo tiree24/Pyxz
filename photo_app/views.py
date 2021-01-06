@@ -22,9 +22,9 @@ class AllTags(View):
 class TagCategory(View):
     html = 'tagcategory.html'
 
-    def get(self, request, tag_id):
+    def get(self, request, tag_title):
         user_id = request.user.id
-        tag = Image.tags.get(id=tag_id)
+        tag = Image.tags.get(name=tag_title)
         images = Image.objects.filter(tags=tag)
         img_urls = [url.photo for url in images]
         return render(request, self.html, {'tag':tag,'img_urls':img_urls, 'user_id':user_id}) 

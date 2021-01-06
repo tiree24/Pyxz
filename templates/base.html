@@ -1,6 +1,11 @@
 <div>
-    <div>Login</div>
+    {% if not user.is_authenticated %}
+    <div><a href='/login/'>Login</a></div>
+    <div><a href='/signup/'>Signup</a></div>
+    {% else %}
+    <div><a href='/logout/'>logout</a></div>
     <div><a href='/profile/{{user_id}}/'>Profile</a></div>
+    {% endif%}
     <div><a href="/listoftags/">List of Groups</a></div>
     <div>Hot/popular</div>
     <div>Hall of Fame</div>
@@ -9,4 +14,3 @@
 {% block content %}{% endblock %}
 
 {% load static %}
-<!-- <img src="{% static '/i/cowsay2.jpg' %}" alt="My image"> -->

@@ -19,14 +19,19 @@ from django.urls import path
 from user_app.views import HomePage, Profile, SignUp
 from photo_app.views import AllTags, TagCategory 
 
+from user_app.views import HomePage, Profile
+from photo_app.views import AllTags, TagCategory
+from auth_app.views import LoginFormView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomePage.as_view(), name='Home'),
+    path('', HomePage.as_view(), name='Homepage'),
     path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
-    path('tag/<int:tag_id>/', TagCategory.as_view(), name='TagSub')
+    path('tag/<slug:tag_title>/', TagCategory.as_view(), name='TagSub'),
+    path("login/", LoginFormView.as_view(), name="login"),
+    path("logout/", LogoutView.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

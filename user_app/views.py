@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
 
+
 from django.views import View
 
 from photo_app.models import Image
@@ -9,11 +10,12 @@ from user_app.forms import SignUpForm
 
 class HomePage(View):
     html = 'homepage.html'
+
     def get(self, request):
         all_images = Image.objects.all()
         img_urls = [img.photo for img in all_images]
         user_id = request.user.id
-        return render(request, self.html, {'img_urls':img_urls, 'user_id':user_id})
+        return render(request, self.html, {'img_urls': img_urls, 'user_id': user_id})
 
 
 class Profile(View):
@@ -46,7 +48,8 @@ class SignUp(View):
                 first_name=data['first_name'],
                 last_name=data['last_name'],
                 email=data['email'],
-                password=data['password'],
+                password=data['password']
             )
-            return HttpResponseRedirect(reverse('Home'))
+            return HttpResponseRedirect(reverse('Homepage'))
 
+        return render(request, self.html, {'user': user, 'num_of_followers': len(user.following.all()), 'img_urls': pyxz_urls, 'user_id': user_id})
