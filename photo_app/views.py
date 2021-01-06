@@ -18,6 +18,7 @@ class AllTags(View):
         tags = Image.tags.all()
         return render(request, self.html, {'taglist':tags, 'user_id':user_id})
 
+
 class TagCategory(View):
     html = 'tagcategory.html'
 
