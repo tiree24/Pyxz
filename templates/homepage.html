@@ -3,20 +3,7 @@
 {% block content %}
 
 {% load static %}
-<head>
-    <style>
-        .x1 {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        border: 2px solid red; align-content: space-between}
 
-        .x2 {
-            margin: 100px;
-        }
-        </style>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-</head>
 <script>
     
 </script>
@@ -28,8 +15,9 @@
     </button>
 
     <div id="{{url}}" class="w3-modal w3-animate-zoom">
+        <!-- button onclick close-modal X -->
         <h3>Title Here: {{url}}</h3>
-        <img onclick="document.getElementById('{{url}}').style.display='none'" class='x2' style='height:250px' src="{% static url %}" alt="My image">
+        <img onclick="document.getElementById('{{url}}').style.display='none'" class='x2' style='height:500px; width: 500px;' src="{% static url %}" alt="My image">
         <div>comment form Here</div>
         <div>list of comments here</div>
     </div>

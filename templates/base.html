@@ -1,15 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .x1 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border: 2px solid red; align-content: space-between}
+
+        .x2 {
+            margin: 20px;
+            height: 100px;
+            width: 150px;
+        }
+        </style>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
 <div>
     {% if not user.is_authenticated %}
     <div> <a href='/login/'>Login</a></div>
+    <div> <a href='/signup/'>Sign Up</a></div>
+
     {% else %}
     <div> <a href='/logout/'>logout</a></div>
     <div><a href='/profile/{{user_id}}/'>Profile</a></div>
     {% endif%}
     <div><a href="/listoftags/">List of Groups</a></div>
-    <div>Hot/popular</div>
+    <div>popular</div>
     <div>Hall of Fame</div>
+    <div><a href='/admin'>admin</a></div>
+
     <div><a href='/'>HOME</a></div>
 </div>
 {% block content %}{% endblock %}
 
 {% load static %}
+
+
+<P>Copyright © 2021 by pyxz digital media inc.
+All rights reserved. No part of this publication may be reproduced, distributed,
+ or transmitted in any form or by any means, including photocopying, recording, 
+ or other electronic or mechanical methods, without the prior written permission 
+ of the publisher, except in the case of brief quotations embodied in critical 
+ reviews and certain other noncommercial uses permitted by copyright law. </p>
+
+</body>
+</html>
