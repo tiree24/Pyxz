@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<head>
+    <style>
+        .x1 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border: 2px solid red; align-content: space-between}
+
+        .x2 {
+            margin: 100px;
+        }
+        </style>
+</head>
+
+<div class='x1'>
+    {% for url in img_urls %}
+        <img class='x2' style='height:250px' src="{% static url %}" alt="My image">
+    {% endfor %}
+</div>
+
+{% endblock %}
