@@ -9,6 +9,7 @@ from user_app.models import MyUser
 from user_app.forms import SignUpForm
 
 class HomePage(View):
+    
     html = 'homepage.html'
 
     def get(self, request):
@@ -19,6 +20,7 @@ class HomePage(View):
 
 
 class Profile(View):
+
     html = 'profile.html'
 
     def get(self, request, user_id):
