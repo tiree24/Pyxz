@@ -5,7 +5,11 @@ from comment_app.forms import CommentForm
 from comment_app.models import Comment
 
 from django.views import View
+
+from django.http import HttpResponseRedirect
 # Create your views here.
+
+from django.urls import reverse
 
 
 def image_view(request, img_id):
@@ -26,11 +30,23 @@ class TagCategory(View):
     html = 'tagcategory.html'
 
     form = CommentForm()
-    comments = Comment.objects.all()
 
     def get(self, request, tag_title):
+        comments = Comment.objects.all()
         user_id = request.user.id
         tag = Image.tags.get(name=tag_title)
         images = Image.objects.filter(tags=tag)
         imgs = [img for img in images]
-        return render(request, self.html, {'tag':tag,'imgList':imgs, 'user_id':user_id, 'form': self.form, 'comments': self.comments}) 
+        return render(request, self.html, {'tag':tag,'imgList':imgs, 'user_id':user_id, 'form': self.form, 'comments': comments}) 
+
+    def post(self, request, tag_title):
+        form = CommentForm(request.POST)
+        tag = Image.tags.get(name=tag_title)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        
