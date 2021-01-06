@@ -27,7 +27,7 @@ urlpatterns = [
     path('', HomePage.as_view(), name='Homepage'),
     path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
-    path('tag/<int:tag_id>/', TagCategory.as_view(), name='TagSub'),
+    path('tag/<slug:tag_title>/', TagCategory.as_view(), name='TagSub'),
     path("login/", LoginFormView.as_view(), name="login"),
     path("logout/", LogoutView.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
