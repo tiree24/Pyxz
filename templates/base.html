@@ -1,8 +1,9 @@
 <div>
     {% if not user.is_authenticated %}
-    <div> <a href='/login/'>Login</a></div>
+    <div><a href='/login/'>Login</a></div>
+    <div><a href='/signup/'>Signup</a></div>
     {% else %}
-    <div> <a href='/logout/'>logout</a></div>
+    <div><a href='/logout/'>logout</a></div>
     <div><a href='/profile/{{user_id}}/'>Profile</a></div>
     {% endif%}
     <div><a href="/listoftags/">List of Groups</a></div>

@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from user_app.views import HomePage, Profile, SignUp
+from photo_app.views import AllTags, TagCategory 
+
 from user_app.views import HomePage, Profile
 from photo_app.views import AllTags, TagCategory
 from auth_app.views import LoginFormView, LogoutView
@@ -26,6 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePage.as_view(), name='Homepage'),
     path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
+    path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
     path('tag/<slug:tag_title>/', TagCategory.as_view(), name='TagSub'),
     path("login/", LoginFormView.as_view(), name="login"),
