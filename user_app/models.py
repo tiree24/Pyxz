@@ -6,8 +6,9 @@ from django.contrib.auth.models import AbstractUser
 
 
 class MyUser(AbstractUser):
-    following = models.ManyToManyField('self', related_name='follow')
-    websiteURL = models.URLField()
+    following = models.ManyToManyField(
+        'self', related_name='follow', blank=True)
+    websiteURL = models.URLField(null=False, blank=True)
 
     def __str__(self):
         return self.username

@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+<h2>Title: {{i.title}}</h3>
+<h4> by: <a href="kldsafal/">{{i.myuser.username}}</a> at: {{i.post_time}}</h4>
+<p>Description: {{i.description}}</p>
+
+
+<button onclick="document.getElementById('{{  i.photo.url}}').style.display='block'" class="w3-button">
+  <img class='x2' style='height:auto; width:60vw' src="{% static i.photo.url %}" alt="My image">
+</button>
+
+<div id="{{i.photo.url}}" class="w3-modal w3-animate-zoom">
+  <img onclick="document.getElementById('{{i.photo.url}}').style.display='none'" class='x2' style='height:auto; width: auto;' src="{% static i.photo.url %}" alt="My image">
+</div>
+
+{%for tag in t%}
+<li ><a  href='/tag/{{tag.id}}'>#{{tag}}</a></li>
+{%endfor%} 
+
+
+{%for c in comments %}
+  {{c}}
+{%endfor%} 
+
+{% endblock %}

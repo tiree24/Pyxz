@@ -8,7 +8,8 @@ from django.views import View
 
 def image_view(request, img_id):
     i = Image.objects.get(id=img_id)
-    return render(request, "image_detail.html", {"i": i})
+    t = i.tags.all()
+    return render(request, "image_detail.html", {"i": i, "t": t})
 
 
 class AllTags(View):
@@ -17,7 +18,7 @@ class AllTags(View):
     def get(self, request):
         user_id = request.user.id
         tags = Image.tags.all()
-        return render(request, self.html, {'taglist':tags, 'user_id':user_id})
+        return render(request, self.html, {'taglist': tags, 'user_id': user_id})
 
 
 class TagCategory(View):

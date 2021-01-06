@@ -20,7 +20,7 @@ from user_app.views import HomePage, Profile, SignUp
 from photo_app.views import AllTags, TagCategory 
 
 from user_app.views import HomePage, Profile
-from photo_app.views import AllTags, TagCategory, ImageUpload
+from photo_app.views import AllTags, image_view, TagCategory, ImageUpload
 from auth_app.views import LoginFormView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -31,6 +31,7 @@ urlpatterns = [
     path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
+    path('img/<int:img_id>', image_view),
     path('tag/<slug:tag_title>/', TagCategory.as_view(), name='TagSub'),
     path("login/", LoginFormView.as_view(), name="login"),
     path("logout/", LogoutView.as_view()),
