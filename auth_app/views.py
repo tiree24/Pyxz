@@ -19,10 +19,10 @@ class LoginFormView(View):
                 request, username=data['username'], password=data['password'])
             if user:
                 login(request, user)
-                return HttpResponseRedirect(request.GET.get('next', reverse('homepage')))
+                return HttpResponseRedirect(request.GET.get('next', reverse('Homepage')))
 
 
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect(reverse("homepage"))
+        return HttpResponseRedirect(reverse("Homepage"))
