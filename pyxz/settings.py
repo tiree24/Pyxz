@@ -85,10 +85,18 @@ DATABASES = {
     }
 }
 
+
+
 STATICFILES_DIRS = [
     BASE_DIR / "",
     '/static/i/',
 ]
+
+# Base url to serve media files
+#MEDIA_URL = '/media/'
+
+# Path where media is stored
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
