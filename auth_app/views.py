@@ -7,27 +7,22 @@ from django.views.generic import View
 
 class LoginFormView(View):
 
-    form_class = LoginForm
-
     def get(self, request):
-        html = 'generic_form.html'
-        form = self.form_class
-        context = {'form': form}
-        return render(request, html, context)
+        form = LoginForm()
+        return render(request, "generic_form.html", {'cont': "You can login in here", 'form': form})
 
     def post(self, request):
-        if request.method == 'POST':
-            form = self.form_class(request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             user = authenticate(
                 request, username=data['username'], password=data['password'])
             if user:
                 login(request, user)
-                return HttpResponseRedirect(request.GET.get('next', reverse('homepage')))
+                return HttpResponseRedirect(request.GET.get('next', reverse('Homepage')))
 
 
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect(reverse('Homepage'))
+        return HttpResponseRedirect(reverse("Homepage"))
