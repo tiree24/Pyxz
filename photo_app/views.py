@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from photo_app.models import Image, TaggableManager
 
+from comment_app.forms import CommentForm
+from comment_app.models import Comment
+
 from django.views import View
 # Create your views here.
 
@@ -22,9 +25,12 @@ class AllTags(View):
 class TagCategory(View):
     html = 'tagcategory.html'
 
+    form = CommentForm()
+    comments = Comment.objects.all()
+
     def get(self, request, tag_title):
         user_id = request.user.id
         tag = Image.tags.get(name=tag_title)
         images = Image.objects.filter(tags=tag)
-        img_urls = [url.photo for url in images]
-        return render(request, self.html, {'tag':tag,'img_urls':img_urls, 'user_id':user_id}) 
+        imgs = [img for img in images]
+        return render(request, self.html, {'tag':tag,'imgList':imgs, 'user_id':user_id, 'form': self.form, 'comments': self.comments}) 
