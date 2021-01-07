@@ -36,9 +36,11 @@ class TagCategory(View):
     def get(self, request, tag_title):
         comments = Comment.objects.all()
         tag = Image.tags.get(name=tag_title)
-        images = Image.objects.filter(tags=tag)
-        imgs = [img for img in images]
-        return render(request, self.html, {'tag':tag,'imgList':imgs, 'form': self.form, 'comments': comments}) 
+        img_set = Image.objects.filter(tags=tag)
+        """ Need this or a way to capture your photos .all() or .get()"""
+        comments = Comment.objects.all()
+        """ Need this """
+        return render(request, self.html, {'tag':tag,'img_set': img_set, 'comments': comments, 'form': self.form}) 
 
     def post(self, request, tag_title):
         form = CommentForm(request.POST)
