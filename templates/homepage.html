@@ -1,6 +1,12 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 
-<div>{% include 'story.partial' %}</div>
-<div>{% include 'card_partial.html' with obj=img_urls%}</div>
+<div>{% include 'story_partial.html' %}</div>
+<div>
+  display:
+  <button>all*</button>
+  <button>new*</button>
+  <button>top*</button>
+</div>
+<div>{% include 'card_partial.html' with obj=img_set%}</div>
 
 {% endblock %}

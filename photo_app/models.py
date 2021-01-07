@@ -17,6 +17,10 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+    def score(self):
+        return len(self.likes.all())
+
+
 
 # Display for this many hours (int field)
 # Story (boolean field)  ← notifications BooleanField
