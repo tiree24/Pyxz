@@ -1,4 +1,4 @@
-{%for img in img_set%} {% load static %}
+{%for img in obj%} {% load static %}
 <button
   onclick="document.getElementById('{{img.photo}}').style.display='block'"
   class="w3-button"
@@ -26,8 +26,16 @@
     <a href="/likeup/{{img.id}}/"><a href="/likedown/{{img.id}}/"><button>down</button></a>
     <div>
     <p>{{img.description}}</p>
-      <div>comment form Here</div>
-      <div>list of comments here</div>
+      <div>{{test}}</div>
+      <form method="POST" action="">
+        {% csrf_token %} {{ form.as_table }}
+        <input type="hidden" name="title" value="{{ img.photo }}" />
+        <button type="submit" value="Post" class="btn btn-dark">💡</button>
+      </form>
+      {% for comment in comments %} {% if comment.photo_linked == img %}
+      <li>{{comment}}</li>
+      {% endif %} {% endfor %}
+
     </div>
   </div>
 </div>
