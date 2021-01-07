@@ -1,26 +1,34 @@
-{%for url in img_urls%} {% load static %}
+{%for img in img_set%} {% load static %}
 <button
-  onclick="document.getElementById('{{url}}').style.display='block'"
+  onclick="document.getElementById('{{img.photo}}').style.display='block'"
   class="w3-button"
 >
   <img
     class="x2"
     style="height: 250px; width: auto"
-    src="{% static url %}"
+    src="{% static img.photo %}"
     alt="My image"
   />
 </button>
 
-<div id="{{url}}" class="w3-modal w3-animate-zoom">
-  <h3>Title Here: {{url}}</h3>
+<div id="{{img.photo}}" class="w3-modal w3-animate-zoom">
+  <h3>Title Here: {{img.photo}}</h3>
   <img
-    onclick="document.getElementById('{{url}}').style.display='none'"
+    onclick="document.getElementById('{{img.photo}}').style.display='none'"
     class="x2"
     style="height: auto; width: 60vw"
-    src="{% static url %}"
+    src="{% static img.photo %}"
     alt="My image"
   />
-  <div>comment form Here</div>
-  <div>list of comments here</div>
+  <div class="score">
+    <a href="/likeup/{{img.id}}/"><button>up</button></a>
+    {{img.score}}
+    <a href="/likeup/{{img.id}}/"><a href="/likedown/{{img.id}}/"><button>down</button></a>
+    <div>
+    <p>{{img.description}}</p>
+      <div>comment form Here</div>
+      <div>list of comments here</div>
+    </div>
+  </div>
 </div>
 {%endfor%}

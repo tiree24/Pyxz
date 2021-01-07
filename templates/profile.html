@@ -3,14 +3,16 @@
   <br />
 
   <h1>Welcome to your profile, {{user}}! <button>edit*</button></h1>
-  <p>Following: {{num_of_followers}}</p>
+  <p>Following {{user.get_following_num}} users: {{user.get_following}}</p>
+  <h3>Date Joined:{{user.date_joined}}</h3>
 
   <h3>Your Pyxz's</h3>
+
   <br />
+
   {% load static %}
 
-  <div>{% include 'card_partial.html' with obj=img_urls%}</div>
+  <div>{% include 'card_partial.html' with obj=img_set%}</div>
 
-  <h3>Date Joined:{{user.date_joined}}</h3>
   {% endblock %}
 </div>

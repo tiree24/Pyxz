@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from photo_app.models import Image, TaggableManager
 from photo_app.forms import ImageForm
-
+from user_app.models import MyUser
 
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
@@ -72,4 +72,17 @@ class ImageUpload(View):
             return render(request, self.html, {'form': form})
 
 
-        
+def LikeUpView(request, img_id):
+    target = Image.objects.get(id=img_id)
+    auth_user = MyUser.objects.get(id=request.user.id)
+    target.likes.add(auth_user)
+    print(target.likes.all)
+    target.save()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def LikeDownView(request, img_id):
+    target = Image.objects.get(id=img_id)
+    auth_user = MyUser.objects.get(id=request.user.id)
+    target.likes.remove(auth_user)
+    target.save()
+    return redirect(request.META.get('HTTP_REFERER'))

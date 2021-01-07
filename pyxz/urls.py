@@ -20,7 +20,7 @@ from user_app.views import HomePage, Profile, SignUp
 from photo_app.views import AllTags, TagCategory 
 
 from user_app.views import HomePage, Profile
-from photo_app.views import AllTags, image_view, TagCategory, ImageUpload
+from photo_app.views import AllTags, image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView
 from auth_app.views import LoginFormView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -36,4 +36,6 @@ urlpatterns = [
     path("login/", LoginFormView.as_view(), name="login"),
     path("logout/", LogoutView.as_view()),
     path("upload/", ImageUpload.as_view()),
+    path("likeup/<int:img_id>/", LikeUpView),
+    path("likedown/<int:img_id>/", LikeDownView)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
