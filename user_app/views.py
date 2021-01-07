@@ -45,7 +45,7 @@ class SignUp(View):
             form = self.form_class(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            MyUser.objects.create(
+            MyUser.objects.create_user(
                 username=data['username'],
                 first_name=data['first_name'],
                 last_name=data['last_name'],
