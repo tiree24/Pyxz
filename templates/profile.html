@@ -1,34 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div>
+  <br />
 
-{% block content %}
+  <h1>Welcome to your profile, {{user}}! <button>edit*</button></h1>
+  <p>Following: {{num_of_followers}}</p>
 
-<h1>Welcome to your profile, {{user}}!</h1>
-<p>Following: {{num_of_followers}}</p>
+  <h3>Your Pyxz's</h3>
+  <br />
+  {% load static %}
 
-<h3>Your Pyxz's</h3>
-<br>
-{% load static %}
+  <div>{% include 'card_partial.html' with obj=img_urls%}</div>
 
-    <script>
-        
-    </script>
-    
-    <div>
-        {% for url in img_urls %}
-        <button onclick="document.getElementById('{{url}}').style.display='block'" class="w3-button">
-            <img class='x2' style='height:250px' src="{% static url %}" alt="My image">
-        </button>
-    
-        <div id="{{url}}" class="w3-modal w3-animate-zoom">
-            <h3>Title Here: {{url}}</h3>
-            <img onclick="document.getElementById('{{url}}').style.display='none'" class='x2' style='height:250px' src="{% static url %}" alt="My image">
-            <div>comment form Here</div>
-            <div>list of comments here</div>
-        </div>
-       
-    
-        {% endfor %}
-    </div>
-
-<h3>Date Joined:{{user.date_joined}}</h3>
-{% endblock %}
+  <h3>Date Joined:{{user.date_joined}}</h3>
+  {% endblock %}
+</div>
