@@ -24,9 +24,8 @@ class AllTags(View):
     html = 'taglist.html'
 
     def get(self, request):
-        user_id = request.user.id
         tags = Image.tags.all()
-        return render(request, self.html, {'taglist': tags, 'user_id': user_id})
+        return render(request, self.html, {'taglist': tags})
 
 
 class TagCategory(View):
@@ -36,11 +35,10 @@ class TagCategory(View):
 
     def get(self, request, tag_title):
         comments = Comment.objects.all()
-        user_id = request.user.id
         tag = Image.tags.get(name=tag_title)
         images = Image.objects.filter(tags=tag)
         imgs = [img for img in images]
-        return render(request, self.html, {'tag':tag,'imgList':imgs, 'user_id':user_id, 'form': self.form, 'comments': comments}) 
+        return render(request, self.html, {'tag':tag,'imgList':imgs, 'form': self.form, 'comments': comments}) 
 
     def post(self, request, tag_title):
         form = CommentForm(request.POST)
