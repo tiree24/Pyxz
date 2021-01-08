@@ -20,9 +20,8 @@ class HomePage(View):
     def get(self, request):
         comments = Comment.objects.all()
         img_set = Image.objects.all()
-        new = Image.objects.all().order_by('post_time')
-        top = Image.objects.all().order_by('likes')
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form})
+        stories = Image.objects.filter(is_story=True).all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
 
     def post(self, request):
         form = CommentForm(request.POST)
