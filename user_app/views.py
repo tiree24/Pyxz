@@ -48,3 +48,16 @@ class SignUp(View):
             )
             return HttpResponseRedirect(reverse('Homepage'))
 
+
+
+
+def FollowView(request, user_id):
+    user = MyUser.objects.get(id=user_id)
+    request.user.add(user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def UnFollowView(request, user_id):
+    user = MyUser.objects.get(id=user_id)
+    request.user.remove(user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
