@@ -66,9 +66,9 @@ class ImageUpload(View):
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
-            img = Image.objects.create(title= data['title'], 
-            photo = data['photo'], description = data['description'], is_story = data['is_story'], myuser = request.user)
-            img.tags.add(",".join([str(p) for p in data['tags']]))
+            Image.objects.create(title= data['title'], 
+            photo = data['photo'], description = data['description'], 
+            tags = data['tags'], is_story = data['is_story'], myuser = request.user)
             return render(request, 'homepage.html', {'form': form})
         else:
             return render(request, self.html, {'form': form})
