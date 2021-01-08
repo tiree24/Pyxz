@@ -17,11 +17,9 @@ from django.contrib import admin
 from django.urls import path
 
 from user_app.views import HomePage, Profile, SignUp
-from photo_app.views import AllTags, TagCategory 
-
-from user_app.views import HomePage, Profile, FollowView, UnFollowView
 from photo_app.views import AllTags, image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView
 from auth_app.views import LoginFormView, LogoutView
+from comment_app.views import CommentLikeUpView, CommentLikeDownView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -40,4 +38,6 @@ urlpatterns = [
     path("likedown/<int:img_id>/", LikeDownView),
     path("follow/<int:user_id>/", FollowView),
     path("unfollow/<int:user_id>/", UnFollowView),
+    path("commentlikeup/<int:comment_id>/", CommentLikeUpView), 
+    path("commentlikedown/<int:comment_id>/", CommentLikeDownView)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
