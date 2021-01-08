@@ -13,11 +13,15 @@ from comment_app.models import Comment
 class HomePage(View):
     
     html = 'homepage.html'
+    new = Image.objects.all().order_by('post_time')
+    top = Image.objects.all().order_by('likes')
     form = CommentForm()
 
     def get(self, request):
         comments = Comment.objects.all()
         img_set = Image.objects.all()
+        new = Image.objects.all().order_by('post_time')
+        top = Image.objects.all().order_by('likes')
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form})
 
     def post(self, request):
@@ -28,6 +32,10 @@ class HomePage(View):
             model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+    def sortnew(self, request):
+        return render(request, html, {'new': new})
 
 """ Follow this example to add photos/comments to any view """
 class Profile(View):
