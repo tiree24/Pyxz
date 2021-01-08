@@ -13,13 +13,33 @@ from comment_app.models import Comment
 class HomePage(View):
     
     html = 'homepage.html'
-    new = Image.objects.all().order_by('post_time')
-    top = Image.objects.all().order_by('likes')
     form = CommentForm()
 
     def get(self, request):
         comments = Comment.objects.all()
         img_set = Image.objects.all()
+        new = Image.objects.all().order_by('post_time')
+        top = Image.objects.all().order_by('likes')
+        stories = Image.objects.filter(is_story=True).all()
+        return render(request, self.html, {'img_set': img_set, 'new': new, 'top': top, 'comments': comments, 'form': self.form, 'stories':stories   })
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+class NewView(View):
+    
+    html = 'homepage.html'
+    form = CommentForm()
+
+    def get(self, request):
+        comments = Comment.objects.all()
+        img_set = Image.objects.order_by('post_time')[::-1]
         stories = Image.objects.filter(is_story=True).all()
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
 
@@ -33,8 +53,29 @@ class HomePage(View):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-    def sortnew(self, request):
-        return render(request, html, {'new': new})
+class TopView(View):
+    
+    html = 'homepage.html'
+    form = CommentForm()
+    likes = []
+
+    def get(self, request):
+        comments = Comment.objects.all()
+        img_set = Image.objects.order_by('-likes') 
+        stories = Image.objects.filter(is_story=True).all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
 
 """ Follow this example to add photos/comments to any view """
 class Profile(View):
