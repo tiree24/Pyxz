@@ -3,6 +3,8 @@
   <br />
 
   <h1>Welcome to your profile, {{user}}! <button>edit*</button></h1>
+  <a href="/follow/{{ user.id }}/">Follow</a>
+  <a href="/unfollow/{{ user.id }}/">Unfollow</a>
   <p>Following {{user.get_following_num}} users: {{user.get_following}}</p>
   <h3>Date Joined:{{user.date_joined}}</h3>
 
