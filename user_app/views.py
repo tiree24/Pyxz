@@ -19,7 +19,7 @@ class HomePage(View):
         comments = Comment.objects.all()
         img_set = Image.objects.all()
         stories = Image.objects.filter(is_story=True).all()
-        return render(request, self.html, {'img_set': img_set, comments': comments, 'form': self.form, 'stories':stories})
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories})
 
     def post(self, request):
         form = CommentForm(request.POST)
