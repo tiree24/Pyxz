@@ -127,5 +127,5 @@ class SignUp(View):
                 email=data['email'],
                 password=data['password']
             )
-            return HttpResponseRedirect(reverse('Homepage'))
+            return HttpResponseRedirect(reverse('All'))
 
