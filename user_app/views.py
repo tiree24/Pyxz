@@ -84,11 +84,11 @@ class SignUp(View):
 
 def FollowView(request, user_id):
     user = MyUser.objects.get(id=user_id)
-    request.user.add(user)
+    request.user.following.add(user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def UnFollowView(request, user_id):
     user = MyUser.objects.get(id=user_id)
-    request.user.remove(user)
+    request.user.following.remove(user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

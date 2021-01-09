@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from user_app.views import HomePage, Profile, SignUp
+from user_app.views import HomePage, Profile, SignUp, FollowView, UnFollowView
 from photo_app.views import AllTags, image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView
 from auth_app.views import LoginFormView, LogoutView
 from comment_app.views import CommentLikeUpView, CommentLikeDownView
