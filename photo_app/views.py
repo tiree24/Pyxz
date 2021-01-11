@@ -8,6 +8,9 @@ from comment_app.models import Comment
 
 from django.views import View
 
+from taggit.models import Tag
+from django.template.defaultfilters import slugify
+
 from django.http import HttpResponseRedirect
 # Create your views here.
 
@@ -48,7 +51,7 @@ class TagCategory(View):
 
     def get(self, request, tag_title):
         comments = Comment.objects.all()
-        tag = Image.tags.get(name=tag_title)
+        tag = Image.tags.get(slug=tag_title)
         img_set = Image.objects.filter(tags=tag)
         """ Need this or a way to capture your photos .all() or .get()"""
         comments = Comment.objects.all()
@@ -77,12 +80,14 @@ class ImageUpload(View):
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
+        image = Image.objects.all()
         if form.is_valid():
-            data = form.cleaned_data
-            image = Image.objects.create(title= data['title'], 
-            photo = data['photo'], description = data['description'], 
-            tags = data['tags'], is_story = data['is_story'], myuser = request.user)
-            return HttpResponseRedirect(reverse('All'))
+            newimage = form.save(commit=False)
+            newimage.myuser = request.user
+            newimage.slug = slugify(newimage.title)
+            newimage.save()
+            form.save_m2m()
+            return render(request, 'homepage.html', {'form': form})
         else:
             return render(request, self.html, {'form': form})
 
