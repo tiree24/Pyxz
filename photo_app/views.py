@@ -88,8 +88,6 @@ class ImageUpload(View):
             newimage.save()
             form.save_m2m()
             return render(request, 'homepage.html', {'form': form})
-        else:
-            return render(request, self.html, {'form': form})
 
 class StoryUpload(View):
     html = 'storyupload.html'
@@ -98,7 +96,16 @@ class StoryUpload(View):
         form = ImageForm()
         return render(request, 'storyupload.html', {'form': form})
 
-
+    # def post(self, request):
+    #     form = ImageForm(request.POST, request.FILES)
+    #     image = Image.objects.all()
+    #     if form.is_valid():
+    #         newimage = form.save(commit=False)
+    #         newimage.myuser = request.user
+    #         newimage.slug = slugify(newimage.title)
+    #         newimage.save()
+    #         form.save_m2m()
+    #         return render(request, 'homepage.html', {'form': form})
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -109,6 +116,7 @@ class StoryUpload(View):
             return HttpResponseRedirect(reverse('All'))
         else:
             return render(request, self.html, {'form': form})
+            
 
 
 def LikeUpView(request, img_id):
