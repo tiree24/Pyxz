@@ -2,7 +2,7 @@
 <div>{% include 'sidebar_partial.html' with obj=taglist %}</div>
 
 <h1>New Stories:</h1>
-<div class="story container" style="border: 1px solid black; display: flex">
+<div class="story container" style="height:150px;border: 1px solid black; display: flex">
   {% include 'story_partial.html' with obj=stories comments=comments form=form%}
 </div>
 <div>
