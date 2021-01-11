@@ -19,7 +19,9 @@ class HomePage(View):
         comments = Comment.objects.all()
         img_set = Image.objects.all()
         stories = Image.objects.filter(is_story=True).all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories})
+        tags = Image.tags.all()
+        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':tags}
+        return render(request, self.html, context)
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -72,7 +74,26 @@ class TopView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+class FollowUserView(View):
+    
+    html = 'homepage.html'
+    form = CommentForm()
 
+    def get(self, request):
+        followed_users = request.user.following.all()
+        comments = Comment.objects.all()
+        img_set = Image.objects.filter(id__in=followed_users).all()
+        stories = Image.objects.filter(is_story=True).all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 """ Follow this example to add photos/comments to any view """
@@ -83,12 +104,10 @@ class Profile(View):
 
     def get(self, request, user_id):
         user = MyUser.objects.get(id=user_id)
-        """ Need this if you want yo filter photos by which user owns them """
+        """ Need this if you want your filter photos by which user owns them """
         img_set = Image.objects.filter(myuser=user)
         """ Need this or a way to capture your photos .all() or .get()"""
         comments = Comment.objects.all()
-        """ Need this """
-        # imgs = [img for img in images]
         return render(request, self.html, {'user':user,  'img_set':img_set, 'comments': comments, 'form': self.form })
 
     """ Copy the post() function fully """

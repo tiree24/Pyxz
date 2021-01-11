@@ -4,14 +4,14 @@ After cloning:
 
 - pipenv install django
 - pip install django-taggit
-- python -m pip install Pillow
+- python -m pipenv install Pillow
 
+\*\* So currently the home page has the modal semi set up, i have it so if you want to exit the modal you must click on the photo
 
-** So currently the home page has the modal semi set up, i have it so if you want to exit the modal you must click on the photo
-
-**notice that the home screen has diffrent styling when compared to the other screens... that is because i am useing w3 css framework into the project! (dont worry everything is coded in so no new dependencies!) Now that I implymented that i might be able to use a more advanced framework that looks better... here are the docs for the one i used. -> https://www.w3schools.com/w3css/default.asp 
+\*\*notice that the home screen has diffrent styling when compared to the other screens... that is because i am useing w3 css framework into the project! (dont worry everything is coded in so no new dependencies!) Now that I implymented that i might be able to use a more advanced framework that looks better... here are the docs for the one i used. -> https://www.w3schools.com/w3css/default.asp
 
 next should be:
+
 1. adding a form to the modal to add new comments
 2. looping and displaying all comments in each photo
 

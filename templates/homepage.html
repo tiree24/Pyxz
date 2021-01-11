@@ -1,4 +1,6 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
+<div>{% include 'sidebar_partial.html' with obj=taglist %}</div>
+
 <h1>New Stories:</h1>
 <div class="story container" style="border: 1px solid black; display: flex">
   {% include 'story_partial.html' with obj=stories comments=comments form=form%}
@@ -8,8 +10,8 @@
   <button><a href="/">All*</a></button>
   <button><a href="/new/">new*</a></button>
   <button><a href="/top/">top*</a></button>
-  <button>following/user*</button>
-  <button>following/tags*</button>
+  <button><a href="/following/">followed users*</a></button>
+  <button><a href="/top/">followed tags*</a></button>
 </div>
 <div>
   {% include 'card_partial.html' with obj=img_set comments=comments form=form%}

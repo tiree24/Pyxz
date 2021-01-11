@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from user_app.views import HomePage, Profile, SignUp, NewView, TopView, FollowView, UnFollowView
+from user_app.views import HomePage, Profile, SignUp, NewView, TopView, FollowView, UnFollowView, FollowUserView
 from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView
 from auth_app.views import LoginFormView, LogoutView
 from comment_app.views import CommentLikeUpView, CommentLikeDownView
@@ -41,5 +41,6 @@ urlpatterns = [
     path("follow/<int:user_id>/", FollowView),
     path("unfollow/<int:user_id>/", UnFollowView),
     path("commentlikeup/<int:comment_id>/", CommentLikeUpView), 
-    path("commentlikedown/<int:comment_id>/", CommentLikeDownView)
+    path("commentlikedown/<int:comment_id>/", CommentLikeDownView),
+    path("following/", FollowUserView.as_view())
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
