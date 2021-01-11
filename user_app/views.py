@@ -32,14 +32,14 @@ class HomePage(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-class NewView(View):
+class OrderedView(View):
     
     html = 'homepage.html'
     form = CommentForm()
 
-    def get(self, request):
+    def get(self, request, order_by):
         comments = Comment.objects.all()
-        img_set = Image.objects.order_by('post_time')[::-1]
+        img_set = Image.objects.order_by(order_by)[::-1]
         stories = Image.objects.filter(is_story=True).all()
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
 
