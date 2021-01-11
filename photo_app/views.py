@@ -60,7 +60,7 @@ class TagCategory(View):
 
     def post(self, request, tag_title):
         form = CommentForm(request.POST)
-        tag = Image.tags.get(name=tag_title)
+        tag = Image.tags.get(slug=tag_title)
         if form.is_valid():
             data = form.cleaned_data
             img = Image.objects.get(photo=request.POST.get("title", ""))
