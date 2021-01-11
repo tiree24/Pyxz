@@ -64,7 +64,7 @@ class ImageUpload(View):
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
-            Image.objects.create(title= data['title'], 
+            image = Image.objects.create(title= data['title'], 
             photo = data['photo'], description = data['description'], 
             tags = data['tags'], is_story = data['is_story'], myuser = request.user)
             return render(request, 'homepage.html', {'form': form})
