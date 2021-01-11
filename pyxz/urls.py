@@ -25,9 +25,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomePage.as_view(), name='All'),
-    path('new/', NewView.as_view(), name='New'),
-    path('top/', TopView.as_view(), name='Top'),
+    path('', HomePage.as_view(), name = 'All'),
+    path('order/<str:order_by>/', OrderedView.as_view(), name='Ordered'),
+    path("following/", FollowUserView.as_view()),
     path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
@@ -42,6 +42,5 @@ urlpatterns = [
     path("follow/<int:user_id>/", FollowView),
     path("unfollow/<int:user_id>/", UnFollowView),
     path("commentlikeup/<int:comment_id>/", CommentLikeUpView), 
-    path("commentlikedown/<int:comment_id>/", CommentLikeDownView),
-    path("following/", FollowUserView.as_view())
+    path("commentlikedown/<int:comment_id>/", CommentLikeDownView)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

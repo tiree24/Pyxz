@@ -1,5 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% load static %}
-<div>{% include 'sidebar_partial.html' with obj=taglist %}</div>
+{% extends 'base.html' %} {% block content %}   {% load static %}
 
 <h1>New Stories:</h1>
 <div class="story container" style="height:150px;border: 1px solid black; display: flex">
@@ -17,4 +16,29 @@
   {% include 'card_partial.html' with obj=img_set comments=comments form=form%}
 </div>
 
+  <div class="container">
+    <h6>New Stories:</h6>
+    <div class="story" style="border: 1px solid black; display: flex">
+      {% include 'story_partial.html' with obj=stories comments=comments form=form%}
+    </div>
+  </div>
+</div>
+<div class="break"></div>
+<main class="z-depth-5">
+    <div class='row'>
+      <div class='col s10'>
+        <div>
+          Main Feed:
+          <button><a href="/">All</a></button>
+          <button><a href="/post_time/">new</a></button>
+          <button><a href="/likes/">top</a></button>
+          <button><a href="/following/">followed users</a></button>
+          <button><a href="/top/">followed tags</a></button>
+        </div>
+        {% include 'card_partial.html' with obj=img_set comments=comments form=form%}
+      </div>
+      <div class="col s2 z-depth-3">{% include 'sidebar_partial.html' with obj=taglist %}</div>
+    </div>
+  </div >
+</main>
 {% endblock %}
