@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from user_app.views import HomePage, Profile, SignUp, NewView, TopView, FollowView, UnFollowView
-from photo_app.views import AllTags, image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView
+from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView
 from auth_app.views import LoginFormView, LogoutView
 from comment_app.views import CommentLikeUpView, CommentLikeDownView
 from django.conf import settings
@@ -31,7 +31,7 @@ urlpatterns = [
     path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
-    path('img/<int:img_id>', image_view),
+    path('img/<int:img_id>', Image_view.as_view()),
     path('tag/<slug:tag_title>/', TagCategory.as_view(), name='TagSub'),
     path("login/", LoginFormView.as_view(), name="login"),
     path("logout/", LogoutView.as_view()),

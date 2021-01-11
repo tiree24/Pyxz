@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Upload</button>
+    <button class="waves-effect waves-light btn" type="submit">Upload</button>
 </form>
 
 {% if img_obj %}

@@ -14,10 +14,23 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 
-def image_view(request, img_id):
-    i = Image.objects.get(id=img_id)
-    t = i.tags.all()
-    return render(request, "image_detail.html", {"i": i, "t": t})
+class Image_view(View):
+    
+    def get(self, request, img_id):
+        form = CommentForm()
+        i = Image.objects.get(id=img_id)
+        t = i.tags.all()
+        comments = Comment.objects.filter(photo_linked_id=img_id)
+        return render(request, "image_detail.html", {"i": i, "t": t, 'comments':comments, 'form': form})
+
+    def post(self, request, img_id):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(id=img_id)
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class AllTags(View):
@@ -66,10 +79,10 @@ class ImageUpload(View):
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
-            Image.objects.create(title= data['title'], 
+            image = Image.objects.create(title= data['title'], 
             photo = data['photo'], description = data['description'], 
             tags = data['tags'], is_story = data['is_story'], myuser = request.user)
-            return render(request, 'homepage.html', {'form': form})
+            return HttpResponseRedirect(reverse('All'))
         else:
             return render(request, self.html, {'form': form})
 
