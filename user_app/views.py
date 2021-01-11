@@ -7,27 +7,119 @@ from photo_app.models import Image
 from user_app.models import MyUser
 
 from user_app.forms import SignUpForm
+from comment_app.forms import CommentForm
+from comment_app.models import Comment
 
 class HomePage(View):
     
     html = 'homepage.html'
+    form = CommentForm()
 
     def get(self, request):
-        all_images = Image.objects.all()
-        img_urls = [img.photo for img in all_images]
-        user_id = request.user.id
-        return render(request, self.html, {'img_urls': img_urls, 'user_id': user_id})
+        comments = Comment.objects.all()
+        img_set = Image.objects.all()
+        stories = Image.objects.filter(is_story=True).all()
+        tags = Image.tags.all()
+        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':tags}
+        return render(request, self.html, context)
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+class NewView(View):
+    
+    html = 'homepage.html'
+    form = CommentForm()
+
+    def get(self, request):
+        comments = Comment.objects.all()
+        img_set = Image.objects.order_by('post_time')[::-1]
+        stories = Image.objects.filter(is_story=True).all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+class TopView(View):
+    
+    html = 'homepage.html'
+    form = CommentForm()
+    likes = []
+
+    def get(self, request):
+        comments = Comment.objects.all()
+        img_set = Image.objects.order_by('-likes') 
+        stories = Image.objects.filter(is_story=True).all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+class FollowUserView(View):
+    
+    html = 'homepage.html'
+    form = CommentForm()
+
+    def get(self, request):
+        followed_users = request.user.following.all()
+        comments = Comment.objects.all()
+        img_set = Image.objects.filter(id__in=followed_users).all()
+        stories = Image.objects.filter(is_story=True).all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+""" Follow this example to add photos/comments to any view """
 class Profile(View):
 
     html = 'profile.html'
+    form = CommentForm()
 
     def get(self, request, user_id):
         user = MyUser.objects.get(id=user_id)
-        user_pyxz = Image.objects.filter(myuser=user)
-        pyxz_urls = [pyxz.photo for pyxz in user_pyxz]
-        return render(request, self.html, {'user':user, 'num_of_followers':len(user.following.all()), 'img_urls':pyxz_urls, 'user_id':user_id})
+        """ Need this if you want your filter photos by which user owns them """
+        img_set = Image.objects.filter(myuser=user)
+        """ Need this or a way to capture your photos .all() or .get()"""
+        comments = Comment.objects.all()
+        return render(request, self.html, {'user':user,  'img_set':img_set, 'comments': comments, 'form': self.form })
+
+    """ Copy the post() function fully """
+    def post(self, request, user_id):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 
 class SignUp(View):
@@ -52,6 +144,18 @@ class SignUp(View):
                 email=data['email'],
                 password=data['password']
             )
-            return HttpResponseRedirect(reverse('Homepage'))
+            return HttpResponseRedirect(reverse('All'))
 
-        return render(request, self.html, {'user': user, 'num_of_followers': len(user.following.all()), 'img_urls': pyxz_urls, 'user_id': user_id})
+
+
+
+def FollowView(request, user_id):
+    user = MyUser.objects.get(id=user_id)
+    request.user.following.add(user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def UnFollowView(request, user_id):
+    user = MyUser.objects.get(id=user_id)
+    request.user.following.remove(user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

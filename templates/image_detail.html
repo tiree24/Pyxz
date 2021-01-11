@@ -3,24 +3,44 @@
 {% block content %}
 <h2>Title: {{i.title}}</h3>
 <h4> by: <a href="kldsafal/">{{i.myuser.username}}</a> at: {{i.post_time}}</h4>
-<p>Description: {{i.description}}</p>
 
 
-<button onclick="document.getElementById('{{  i.photo.url}}').style.display='block'" class="w3-button">
-  <img class='x2' style='height:auto; width:60vw' src="{% static i.photo.url %}" alt="My image">
-</button>
+<img class='x2' style='height:auto; width:60vw' src="{% static i.photo.url %}" alt="My image">
 
-<div id="{{i.photo.url}}" class="w3-modal w3-animate-zoom">
-  <img onclick="document.getElementById('{{i.photo.url}}').style.display='none'" class='x2' style='height:auto; width: auto;' src="{% static i.photo.url %}" alt="My image">
-</div>
-
+<p>tags:<p>
 {%for tag in t%}
 <li ><a  href='/tag/{{tag.id}}'>#{{tag}}</a></li>
 {%endfor%} 
 
 
-{%for c in comments %}
-  {{c}}
-{%endfor%} 
+<p>Description: {{i.description}}</p>
+
+
+<div class="score">
+  <a href="/likeup/{{i.id}}/"><button>up</button></a>
+  {{i.score}}
+        <a href="/likedown/{{i.id}}/"><button>down</button></a>
+      </div>
+      
+      
+        <form method="POST" action="">
+          {% csrf_token %} {{ form.as_table }}
+          <input type="hidden" name="title" value="{{ i.photo }}" />
+          <button type="submit" value="Post" class="btn btn-dark">💡</button>
+        </form>
+
+        {% for comment in comments %} 
+        {% if comment.photo_linked == i %}
+        <li>{{comment.text}} by
+        <a href="/profile/{{comment.author.id}}">{{comment.author}}</a>
+        <div class="score_comment">
+            <a href="/commentlikeup/{{comment.id}}/"><button>up</button></a>
+            {{comment.score}}
+            <a href="/commentlikedown/{{comment.id}}/"><button>down</button></a>
+          </div>
+          </li>
+        {% endif %} {% endfor %}
+    </div>
+  </div>
 
 {% endblock %}

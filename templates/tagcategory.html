@@ -1,46 +1,12 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1>Welcome to {{tag}}!</h1>
+<h1>Welcome to #{{tag}}!</h1>
 <h3>All Pyxz's</h3>
 <br />
 {% load static %}
 
 <div>
-  {% for img in imgList %}
-  <button
-    onclick="document.getElementById('{{img.photo}}').style.display='block'"
-    class="w3-button"
-  >
-    <img
-      class="x2"
-      style="height: 250px"
-      src="{% static img.photo %}"
-      alt="My image"
-    />
-  </button>
-
-  <div id="{{img.photo}}" class="w3-modal w3-animate-zoom">
-    <h3>Title Here: {{img}}</h3>
-    <img
-      onclick="document.getElementById('{{img.photo}}').style.display='none'"
-      class="x2"
-      style="height: 250px"
-      src="{% static img.photo %}"
-      alt="My image"
-    />
-    <div>hello</div>
-    <form method="POST" action="">
-      {% csrf_token %} {{ form.as_table }}
-      <input type="hidden" name="title" value="{{ img.photo }}" />
-      <button type="submit" value="Post" class="btn btn-dark">💡</button>
-    </form>
-    {% for comment in comments %} {% if comment.photo_linked == img %}
-    <li>{{comment}}</li>
-    {% endif %} {% endfor %}
-    <div>list of comments here</div>
-  </div>
-
-  {% endfor %}
+  {% include 'card_partial.html' with obj=img_set comments=comments form=form %}
 </div>
 
 {% endblock %}

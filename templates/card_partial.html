@@ -1,26 +1,90 @@
-{%for url in img_urls%} {% load static %}
+{%for img in obj%} {% load static %}
+<a href='/img/{{img.id}}'>
+  <img
+    class="x2"
+    style="height: 250px; width: auto"
+    src="{% static img.photo %}"
+    alt="My image"
+  />
+</a>
+
+  
+
+<!-- <div id="{{img.photo}}" class="w3-modal w3-animate-zoom">
+<div class='w3-modal-content'>
+  <h3>Title Here: {{img.photo}}</h3>
+  <img
+    onclick="document.getElementById('{{img.photo}}').style.display='none'"
+    class="x2"
+    style="height: auto; width: 60vw"
+    src="{% static img.photo %}"
+    alt="My image"
+  />
+  
+    <div class="score">
+      <a href="/likeup/{{img.id}}/"><button>up</button></a>
+      {{img.score}}
+      <a href="/likeup/{{img.id}}/"><a href="/likedown/{{img.id}}/"><button>down</button></a>
+    </div>
+    <p>{{img.description}}</p>
+    
+      <form method="POST" action="">
+        {% csrf_token %} {{ form.as_table }}
+        <input type="hidden" name="title" value="{{ img.photo }}" />
+        <button type="submit" value="Post" class="btn btn-dark">💡</button>
+      </form>
+      {% for comment in comments %} {% if comment.photo_linked == img %}
+      <li>{{comment}}</li>
+      {% endif %} {% endfor %}
+  </div>
+</div>
+
+
+
+
+
+
+
 <button
-  onclick="document.getElementById('{{url}}').style.display='block'"
+  onclick="document.getElementById('{{img.photo}}').style.display='block'"
   class="w3-button"
 >
   <img
     class="x2"
     style="height: 250px; width: auto"
-    src="{% static url %}"
+    src="{% static img.photo %}"
     alt="My image"
   />
 </button>
 
-<div id="{{url}}" class="w3-modal w3-animate-zoom">
-  <h3>Title Here: {{url}}</h3>
+<div id="{{img.photo}}" class="w3-modal w3-animate-zoom">
+<div class='w3-modal-content'>
+  <h3>Title Here: {{img.photo}}</h3>
   <img
-    onclick="document.getElementById('{{url}}').style.display='none'"
+    onclick="document.getElementById('{{img.photo}}').style.display='none'"
     class="x2"
     style="height: auto; width: 60vw"
-    src="{% static url %}"
+    src="{% static img.photo %}"
     alt="My image"
   />
-  <div>comment form Here</div>
-  <div>list of comments here</div>
-</div>
+  
+    <div class="score">
+      <a href="/likeup/{{img.id}}/"><button>up</button></a>
+      {{img.score}}
+      <a href="/likeup/{{img.id}}/"><a href="/likedown/{{img.id}}/"><button>down</button></a>
+    </div>
+    <p>{{img.description}}</p>
+    
+      <form method="POST" action="">
+        {% csrf_token %} {{ form.as_table }}
+        <input type="hidden" name="title" value="{{ img.photo }}" />
+        <button type="submit" value="Post" class="btn btn-dark">💡</button>
+      </form>
+      {% for comment in comments %} {% if comment.photo_linked == img %}
+      <li>{{comment}}</li>
+      {% endif %} {% endfor %}
+  </div>
+</div> -->
 {%endfor%}
+
+<!-- needs to turn images into buttons that lead to the details and comment page -->

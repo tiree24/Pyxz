@@ -1,0 +1,53 @@
+{% load static %} {%for img in obj%}
+
+<button
+  onclick="document.getElementById('{{img.photo}}').style.display='block'"
+  class="w3-button"
+  style="display: flex; flex-direction: column"
+>
+  {{img.title}}
+  <img
+    class="x2"
+    style="height: 100px; width: auto; margin: 0px; padding: 0px"
+    src="{% static img.photo %}"
+    alt="My image"
+  />
+</button>
+<div id="{{img.photo}}" class="w3-modal w3-animate-zoom">
+  <div class="w3-modal-content">
+    <h3>Title Here: {{img.title}}</h3>
+    <img
+      onclick="document.getElementById('{{img.photo}}').style.display='none'"
+      class="x2"
+      style="height: auto; width: 60vw"
+      src="{% static img.photo %}"
+      alt="My image"
+    />
+    <div class="score_img">
+      <a href="/likeup/{{img.id}}/"><button>up</button></a>
+      {{img.score}}
+      <a href="/likedown/{{img.id}}/"><button>down</button></a>
+    </div>
+    <p class="w3-container w3-card-4">{{img.description}}</p>
+    <div>
+      <form method="POST" action="">
+        {% csrf_token %} {{ form.as_table }}
+        <input type="hidden" name="title" value="{{ img.photo }}" />
+        <button type="submit" value="Post" class="btn btn-dark">💡</button>
+      </form>
+      <ul>
+        {% for comment in comments %} {% if comment.photo_linked == img %}
+        <li class="w3-card-4">
+          {{comment}}
+          <div class="score_comment">
+            <a href="/commentlikeup/{{comment.id}}/"><button>up</button></a>
+            {{comment.score}}
+            <a href="/commentlikedown/{{comment.id}}/"><button>down</button></a>
+          </div>
+        </li>
+        {% endif %} {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{%endfor%}

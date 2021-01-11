@@ -10,7 +10,7 @@ class Image(models.Model):
     title = models.CharField(max_length=144)
     description = models.TextField(max_length=500)
     photo = models.ImageField(upload_to='static/i')
-    likes = models.ManyToManyField(MyUser, related_name='likes')
+    likes = models.ManyToManyField(MyUser, related_name='likes', blank=True)
     post_time = models.DateTimeField(default=timezone.now)
     is_story = models.BooleanField()
     slug = models.SlugField(default=True, unique=True, max_length=100)
@@ -18,6 +18,10 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+    def score(self):
+        return len(self.likes.all())
+
+
 
 # Display for this many hours (int field)
 # Story (boolean field)  ← notifications BooleanField
