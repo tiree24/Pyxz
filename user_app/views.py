@@ -9,6 +9,8 @@ from user_app.models import MyUser
 from user_app.forms import SignUpForm
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
+import datetime
+
 
 class HomePage(View):
     
@@ -19,6 +21,7 @@ class HomePage(View):
         comments = Comment.objects.all()
         img_set = Image.objects.all()
         stories = Image.objects.filter(is_story=True).all()
+        breakpoint()
         tags = Image.tags.all()
         context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':tags}
         return render(request, self.html, context)

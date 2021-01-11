@@ -1,3 +1,9 @@
+<a 
+  class="btn-floating btn-large waves-effect waves-light red"
+  href="/upload">
+  <i class="material-icons">add</i>
+</a>
+
 {% load static %} {%for img in obj%}
 
 <button
@@ -13,7 +19,7 @@
     alt="My image"
   />
 </button>
-<div id="{{img.photo}}" class="w3-modal w3-animate-zoom">
+<!-- <div id="{{img.photo}}" class="w3-modal w3-animate-zoom">
   <div class="w3-modal-content">
     <h3>Title Here: {{img.title}}</h3>
     <img
@@ -49,5 +55,5 @@
       </ul>
     </div>
   </div>
-</div>
+</div> -->
 {%endfor%}
