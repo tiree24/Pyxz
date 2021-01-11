@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <h2>Title: {{i.title}}</h3>
-<h4> by: <a href="kldsafal/">{{i.myuser.username}}</a> at: {{i.post_time}}</h4>
+<h4> by: <a href="/profile/{{i.myuser.id}}/">{{i.myuser.username}}</a> at: {{i.post_time}}</h4>
 
 
 <img class='x2' style='height:auto; width:60vw' src="{% static i.photo.url %}" alt="My image">
