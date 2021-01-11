@@ -1,6 +1,20 @@
 {% extends 'base.html' %} {% block content %}   {% load static %}
 
-<div class="row">
+<h1>New Stories:</h1>
+<div class="story container" style="height:150px;border: 1px solid black; display: flex">
+  {% include 'story_partial.html' with obj=stories comments=comments form=form%}
+</div>
+<div>
+  Main Feed:
+  <button><a href="/">All*</a></button>
+  <button><a href="/new/">new*</a></button>
+  <button><a href="/top/">top*</a></button>
+  <button><a href="/following/">followed users*</a></button>
+  <button><a href="/top/">followed tags*</a></button>
+</div>
+<div>
+  {% include 'card_partial.html' with obj=img_set comments=comments form=form%}
+</div>
 
   <div class="container">
     <h6>New Stories:</h6>

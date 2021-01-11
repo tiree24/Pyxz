@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path
 
 from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView, UnFollowView, FollowUserView
-from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView
-from auth_app.views import LoginFormView, LogoutView
+
+from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView, StoryUpload
+from auth_app.views import LoginFormView, LogoutView, Error404View
+
 from comment_app.views import CommentLikeUpView, CommentLikeDownView
 from django.conf import settings
 from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +39,7 @@ urlpatterns = [
     path("login/", LoginFormView.as_view(), name="login"),
     path("logout/", LogoutView.as_view()),
     path("upload/", ImageUpload.as_view()),
+    path("uploadstory/", StoryUpload.as_view()),
     path("likeup/<int:img_id>/", LikeUpView),
     path("likedown/<int:img_id>/", LikeDownView),
     path("follow/<int:user_id>/", FollowView),
@@ -43,3 +47,6 @@ urlpatterns = [
     path("commentlikeup/<int:comment_id>/", CommentLikeUpView), 
     path("commentlikedown/<int:comment_id>/", CommentLikeDownView)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler404 = 'auth_app.views.Error404View'
+#handler500 = auth_app.error_500

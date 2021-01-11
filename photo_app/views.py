@@ -91,6 +91,25 @@ class ImageUpload(View):
         else:
             return render(request, self.html, {'form': form})
 
+class StoryUpload(View):
+    html = 'storyupload.html'
+
+    def get(self, request):
+        form = ImageForm()
+        return render(request, 'storyupload.html', {'form': form})
+
+
+    def post(self, request):
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+            image = Image.objects.create(title= data['title'], 
+            photo = data['photo'], description = data['description'], 
+            tags = data['tags'], is_story =True, myuser = request.user)
+            return HttpResponseRedirect(reverse('All'))
+        else:
+            return render(request, self.html, {'form': form})
+
 
 def LikeUpView(request, img_id):
     target = Image.objects.get(id=img_id)

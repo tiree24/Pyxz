@@ -26,3 +26,10 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse('All'))
+
+
+def Error404View(request, exception):
+    return render(request,'404.html')
+
+
+
