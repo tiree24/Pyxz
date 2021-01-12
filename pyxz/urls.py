@@ -19,7 +19,7 @@ from django.urls import path
 from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView, UnFollowView, FollowUserView
 
 from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView, StoryUpload
-from auth_app.views import LoginFormView, LogoutView, Error404View
+from auth_app.views import LoginFormView, LogoutView
 
 from comment_app.views import CommentLikeUpView, CommentLikeDownView
 from django.conf import settings
@@ -48,5 +48,5 @@ urlpatterns = [
     path("commentlikedown/<int:comment_id>/", CommentLikeDownView)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-handler404 = 'auth_app.views.Error404View'
+# handler404 = 'auth_app.views.Error404View'
 #handler500 = auth_app.error_500

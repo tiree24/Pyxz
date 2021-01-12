@@ -1,4 +1,6 @@
 from django.db import models
+from taggit.managers import TaggableManager
+
 
 from django.contrib.auth.models import AbstractUser
 
@@ -9,6 +11,10 @@ class MyUser(AbstractUser):
     following = models.ManyToManyField(
         'self', related_name='follow', blank=True)
     websiteURL = models.URLField(null=False, blank=True)
+    profile_pyxz = models.ImageField(upload_to='static/i', null=True, blank=True)
+    bio = models.CharField(max_length=500, null=True, blank=True)
+    slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
+    tags = TaggableManager()
     # set releted field to tags to allow user to view the things that interest them
     def __str__(self):
         return self.username
