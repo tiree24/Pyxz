@@ -110,9 +110,9 @@ class StoryUpload(View):
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
-            image = Image.objects.create(title= data['title'], 
-            photo = data['photo'], description = data['description'], 
-            tags = data['tags'], is_story =True, myuser = request.user)
+            image = Image.objects.create(slug= data['title'], 
+            photo= data['photo'], description= data['description'], 
+            tags= data['tags'], is_story =True, myuser = request.user)
             return HttpResponseRedirect(reverse('All'))
         else:
             return render(request, self.html, {'form': form})
