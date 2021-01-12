@@ -9,6 +9,9 @@ from user_app.models import MyUser
 from user_app.forms import SignUpForm
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
+import datetime
+import pytz
+
 
 class HomePage(View):
     
@@ -18,7 +21,12 @@ class HomePage(View):
     def get(self, request):
         comments = Comment.objects.all()
         img_set = Image.objects.all()
-        stories = Image.objects.filter(is_story=True).all()
+        # stories = Image.objects.filter(is_story=True).all()
+        current_time = datetime.datetime.now(pytz.utc)
+        def maths(current_time, post_time):
+            numofdays = current_time - post_time
+            return numofdays.days
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':tags}
         return render(request, self.html, context)
@@ -52,37 +60,14 @@ class OrderedView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
-class TopView(View):
-    
-    html = 'homepage.html'
-    form = CommentForm()
-    likes = []
-
-    def get(self, request):
-        comments = Comment.objects.all()
-        img_set = Image.objects.order_by('-likes') 
-        stories = Image.objects.filter(is_story=True).all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
-
-    def post(self, request):
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            img = Image.objects.get(photo=request.POST.get("title", ""))
-            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
-            model.save()
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 class FollowUserView(View):
-    
     html = 'homepage.html'
     form = CommentForm()
 
     def get(self, request):
-        followed_users = request.user.following.all()
+        following = request.user.following.all()
         comments = Comment.objects.all()
-        img_set = Image.objects.filter(id__in=followed_users).all()
+        img_set = Image.objects.filter(id__in=following).all()
         stories = Image.objects.filter(is_story=True).all()
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
 
