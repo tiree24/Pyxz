@@ -11,11 +11,17 @@
     </div>
       <div class="nav-content">
         <ul class="tabs tabs-transparent">
+          {% if not user.is_authenticated %}
+          <li class="tab"><a href="/">All</a></li>
+          <li class="tab"><a href="/order/post_time/">new</a></li>
+          <li class="tab"><a href="/order/likes/">top</a></li>
+          {% else %}
           <li class="tab"><a href="/">All</a></li>
           <li class="tab"><a href="/order/post_time/">new</a></li>
           <li class="tab"><a href="/order/likes/">top</a></li>
           <li class="tab"><a href="/following/">followed users</a></li>
           <li class="tab"><a href="/followingtags/">followed tags*</a></li>
+          {% endif%}
         </ul>
   </nav>
 
