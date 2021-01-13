@@ -48,7 +48,7 @@ class OrderedView(View):
 
     def get(self, request, order_by):
         comments = Comment.objects.all()
-        img_set = Image.objects.order_by(order_by)[::-1]
+        img_set = Image.objects.filter(is_story=False).all().order_by(order_by)[::-1]
         stories = Image.objects.filter(is_story=True).all()
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
 
