@@ -2,12 +2,14 @@ from django.shortcuts import render, HttpResponseRedirect, reverse
 
 
 from django.views import View
+from django.views.generic import ListView
 from django.db.models import Count
 from photo_app.models import Image
 from user_app.models import MyUser
+from photo_app.models import Image, TaggableManager
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q 
 from user_app.forms import SignUpForm, UserEditForm
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
@@ -222,3 +224,27 @@ def UnFollowView(request, user_id):
     user = MyUser.objects.get(id=user_id)
     request.user.following.remove(user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class SearchView(ListView):
+    model = MyUser, Image
+    template_name = 'search.html'
+    #def get(self, request):
+        #return render(request, 'search.html', {})
+    def get_queryset(self): # new
+        query = self.request.GET.get('q', None)
+        if query == None:
+            return render(self.request, 'search.html', {})
+        
+
+        object_list = MyUser.objects.filter(
+            Q(username__icontains=query) 
+        )
+        
+        tag_list = Image.objects.all().filter(
+            Q(slug__icontains=query))
+        # object_list += [_image.tags.filter(
+        #     Q(slug__icontains=query)) for _image in img_set]
+        return object_list
+
+    
