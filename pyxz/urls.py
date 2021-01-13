@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView, UnFollowView, FollowUserView
+from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView, UnFollowView, FollowUserView, TopView, EditFormView, funcView
 
 from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView, StoryUpload
 from auth_app.views import LoginFormView, LogoutView
@@ -29,9 +29,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePage.as_view(), name = 'All'),
-    path('order/<str:order_by>/', OrderedView.as_view(), name='Ordered'),
+    path('order/<str:order_by>/', OrderedView.as_view(), name = 'Ordered'),
+    path('top/', TopView.as_view(), name='Top'),
     path("following/", FollowUserView.as_view()),
-    path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
+    path('profile/<int:user_id>/', Profile.as_view(), name = 'Profile'),
+    path('profile/edit', funcView),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
     path('img/<int:img_id>', Image_view.as_view()),

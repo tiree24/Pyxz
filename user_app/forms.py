@@ -1,4 +1,11 @@
 from django import forms
+from user_app.models import MyUser
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = MyUser
+        fields = ['bio', 'profile_pyxz', 'tags']
+
 
 
 class SignUpForm(forms.Form):
