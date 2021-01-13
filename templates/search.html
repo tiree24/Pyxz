@@ -1,0 +1,17 @@
+<!-- templates/home.html -->
+<h1>HomePage</h1>
+<form action="{% url 'search' %}" method="get">
+  <input name="q" type="text" placeholder="Search..." />
+</form>
+<h1>Search Results</h1>
+
+<ul>
+  {% for user in object_list %}
+  <li>{{ user.username }}</li>
+  {% endfor %}
+</ul>
+<ul>
+  {% for user in tag_list %}
+  <li>{{ user.username }}</li>
+  {% endfor %}
+</ul>
