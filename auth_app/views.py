@@ -9,7 +9,7 @@ class LoginFormView(View):
 
     def get(self, request):
         form = LoginForm()
-        return render(request, "generic_form.html", {'cont': "You can login in here", 'form': form})
+        return render(request, "login_view.html", {'cont': "You can login in here", 'form': form})
 
     def post(self, request):
         form = LoginForm(request.POST)

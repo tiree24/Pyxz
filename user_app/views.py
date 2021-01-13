@@ -20,6 +20,7 @@ class HomePage(View):
 
     def get(self, request):
         comments = Comment.objects.all()
+        """ add this to views with all pictures except for stories """
         img_set = Image.objects.filter(is_story=False).all()
         # stories = Image.objects.filter(is_story=True).all()
         current_time = datetime.datetime.now(pytz.utc)
