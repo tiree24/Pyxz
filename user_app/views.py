@@ -20,7 +20,7 @@ class HomePage(View):
 
     def get(self, request):
         comments = Comment.objects.all()
-        img_set = Image.objects.all()
+        img_set = Image.objects.filter(is_story=False).all()
         # stories = Image.objects.filter(is_story=True).all()
         current_time = datetime.datetime.now(pytz.utc)
         def maths(current_time, post_time):
