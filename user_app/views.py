@@ -20,7 +20,8 @@ class HomePage(View):
 
     def get(self, request):
         comments = Comment.objects.all()
-        img_set = Image.objects.all()
+        """ add this to views with all pictures except for stories """
+        img_set = Image.objects.filter(is_story=False).all()
         # stories = Image.objects.filter(is_story=True).all()
         current_time = datetime.datetime.now(pytz.utc)
         def maths(current_time, post_time):
@@ -47,9 +48,10 @@ class OrderedView(View):
 
     def get(self, request, order_by):
         comments = Comment.objects.all()
-        img_set = Image.objects.order_by(order_by)[::-1]
+        img_set = Image.objects.filter(is_story=False).all().order_by(order_by)[::-1]
         stories = Image.objects.filter(is_story=True).all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+        tags = Image.tags.all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':tags   })
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -90,7 +92,7 @@ class Profile(View):
     def get(self, request, user_id):
         user = MyUser.objects.get(id=user_id)
         """ Need this if you want your filter photos by which user owns them """
-        img_set = Image.objects.filter(myuser=user)
+        img_set = Image.objects.filter(is_story=False).all().filter(myuser=user)
         """ Need this or a way to capture your photos .all() or .get()"""
         comments = Comment.objects.all()
         return render(request, self.html, {'user':user,  'img_set':img_set, 'comments': comments, 'form': self.form })
