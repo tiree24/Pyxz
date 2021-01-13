@@ -1,18 +1,16 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 <div>
-  <h1>Welcome, {{user}}! </h1><a href="profile/{{user.id}}/edit"><button>edit*</button></a></h1>
+  <h1>Welcome, {{user}}! </h1><a href="/profile/{{user.id}}/edit"><button>edit*</button></a></h1>
   <a href="/follow/{{ user.id }}/">Follow</a>
   <a href="/unfollow/{{ user.id }}/">Unfollow</a>
   <p>Following {{user.get_following_num}} users: {{user.get_following}}</p>
   <h3>Date Joined:{{user.date_joined}}</h3>
   <p>{{user.bio}}</p>
 
-  <img class ="circle" src='{% static user.profile_pyxz %}' alt="profile picture">
-  slugs: {%for tag in user.slug%}
-    tag
-  {%endfor%}
+  <img class ="circle" style='height: 66px; width:66px' src='{% static user.profile_pyxz %}' alt="profile picture">
+
   tags: {%for tag in user.tags.all%}
-  tag
+  <li ><a  href='/tag/{{tag.slug}}'>#{{tag}}</a></li>
   {%endfor%}
   <h3>Your Pyxz's</h3>
 

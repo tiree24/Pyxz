@@ -2,11 +2,13 @@ from django.shortcuts import render, HttpResponseRedirect, reverse
 
 
 from django.views import View
-
+from django.db.models import Count
 from photo_app.models import Image
 from user_app.models import MyUser
+from django.template.defaultfilters import slugify
+from django.contrib.auth.decorators import login_required
 
-from user_app.forms import SignUpForm
+from user_app.forms import SignUpForm, UserEditForm
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
 import datetime
@@ -62,6 +64,27 @@ class OrderedView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+class TopView(View):
+    
+    html = 'homepage.html'
+    form = CommentForm()
+
+    def get(self, request):
+        comments = Comment.objects.all()
+        img_set = Image.objects.annotate(like_count=Count('likes')).order_by('-like_count')
+        # stories = Image.objects.filter(is_story=True).all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':'stories'   })
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 class FollowUserView(View):
     html = 'homepage.html'
     form = CommentForm()
@@ -69,9 +92,9 @@ class FollowUserView(View):
     def get(self, request):
         following = request.user.following.all()
         comments = Comment.objects.all()
-        img_set = Image.objects.filter(id__in=following).all()
+        img_set = Image.objects.filter(myuser_id__in=following).all()
         stories = Image.objects.filter(is_story=True).all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories   })
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -133,7 +156,60 @@ class SignUp(View):
             )
             return HttpResponseRedirect(reverse('All'))
 
+class EditFormView(View):
+    def get(self, request):
+        form_data = {'bio': request.user.bio, 'tags': request.user.tags.all()}
+        form = UserEditForm(initial=form_data, instance=request.user)
+        html = 'generic_form.html'
+        context = {'form': form}
+        return render(request, html, context)
 
+    def post(self, request):
+        form = UserEditForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            data = form.cleaned_data
+            custom_form = form.save(commit=False)
+            custom_form.save()
+            form.save_m2m()
+            u = MyUser.objects.get(id=request.user.id)
+            u.profile_pyxz = data['profile_pyxz']
+            u.save()
+            breakpoint()
+            return render(request, 'homepage.html', {'form': form})
+
+def funcView(request):
+    if request.POST:
+        form = UserEditForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            data = form.cleaned_data
+            custom_form = form.save(commit=False)
+            custom_form.save()
+            form.save_m2m()
+            u = MyUser.objects.get(id=request.user.id)
+            # u['profile_pyxz'] = request.POST['profile_pyxz'][0]
+            u.save()
+            breakpoint()
+            return render(request, 'homepage.html', {'form': form})
+    else:
+        form_data = {'bio': request.user.bio, 'tags': request.user.tags.all()}
+        form = UserEditForm(initial=form_data, instance=request.user)
+        html = 'generic_form.html'
+        context = {'form': form}
+        return render(request, html, context)
+
+
+    # def post(self, request):
+    #     form = ImageForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         data = form.cleaned_data
+    #         u = MyUser.objects.get(id=request.user.id)
+    #         u.photo = data['profile_pyxz']
+    #         u.bio = data['bio'], 
+    #         tags = data['tags'],
+    #         return HttpResponseRedirect(reverse('All'))
+    #     else:
+    #         return render(request, self.html, {'form': form})
+            
 
 
 def FollowView(request, user_id):
