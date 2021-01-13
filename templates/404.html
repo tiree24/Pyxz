@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %} {% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 <h1>404 error page</h1>
 <div class="jumbotron">
   <h1 class="display-4">Page not found</h1>

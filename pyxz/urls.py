@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView, UnFollowView, FollowUserView, TopView, EditFormView, funcView
+from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView, UnFollowView, FollowUserView, TopView, EditFormView, funcView, SearchView
 
 from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView, StoryUpload
 from auth_app.views import LoginFormView, LogoutView
@@ -47,7 +47,8 @@ urlpatterns = [
     path("follow/<int:user_id>/", FollowView),
     path("unfollow/<int:user_id>/", UnFollowView),
     path("commentlikeup/<int:comment_id>/", CommentLikeUpView), 
-    path("commentlikedown/<int:comment_id>/", CommentLikeDownView)
+    path("commentlikedown/<int:comment_id>/", CommentLikeDownView),
+    path("search/", SearchView.as_view(), name='search'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # handler404 = 'auth_app.views.Error404View'
