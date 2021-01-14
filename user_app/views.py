@@ -96,7 +96,8 @@ class FollowUserView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(myuser_id__in=following).all()
         stories = Image.objects.filter(is_story=True).all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories   })
+        tags = Image.tags.all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist':tags   })
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -107,7 +108,26 @@ class FollowUserView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+class FollowTagsView(View):
+    html = 'homepage.html'
+    form = CommentForm()
 
+    def get(self, request):
+        following = request.user.tags.all()
+        comments = Comment.objects.all()
+        img_set = Image.objects.filter(tags__in=following).all()
+        stories = Image.objects.filter(is_story=True).all()
+        tags = Image.tags.all()
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags   })
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 """ Follow this example to add photos/comments to any view """
 class Profile(View):
 
@@ -198,20 +218,6 @@ def funcView(request):
         html = 'generic_form.html'
         context = {'form': form}
         return render(request, html, context)
-
-
-    # def post(self, request):
-    #     form = ImageForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         data = form.cleaned_data
-    #         u = MyUser.objects.get(id=request.user.id)
-    #         u.photo = data['profile_pyxz']
-    #         u.bio = data['bio'], 
-    #         tags = data['tags'],
-    #         return HttpResponseRedirect(reverse('All'))
-    #     else:
-    #         return render(request, self.html, {'form': form})
-            
 
 
 def FollowView(request, user_id):
