@@ -45,8 +45,9 @@ class HomePage(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 class OrderedView(View):
-    
+
     html = 'homepage.html'
     form = CommentForm()
 
@@ -66,8 +67,9 @@ class OrderedView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 class TopView(View):
-    
+
     html = 'homepage.html'
     form = CommentForm()
 
@@ -109,6 +111,8 @@ class FollowUserView(View):
 
 
 """ Follow this example to add photos/comments to any view """
+
+
 class Profile(View):
 
     html = 'profile.html'
@@ -131,7 +135,6 @@ class Profile(View):
             model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 
 
 class SignUp(View):
@@ -158,6 +161,7 @@ class SignUp(View):
             )
             return HttpResponseRedirect(reverse('All'))
 
+
 class EditFormView(View):
     def get(self, request):
         form_data = {'bio': request.user.bio, 'tags': request.user.tags.all()}
@@ -176,14 +180,14 @@ class EditFormView(View):
             u = MyUser.objects.get(id=request.user.id)
             u.profile_pyxz = data['profile_pyxz']
             u.save()
-            breakpoint()
             return render(request, 'homepage.html', {'form': form})
+
 
 def funcView(request):
     if request.POST:
         form = UserEditForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            data = form.cleaned_data
+            # data = form.cleaned_data
             custom_form = form.save(commit=False)
             custom_form.save()
             form.save_m2m()
@@ -211,7 +215,6 @@ def funcView(request):
     #         return HttpResponseRedirect(reverse('All'))
     #     else:
     #         return render(request, self.html, {'form': form})
-            
 
 
 def FollowView(request, user_id):
@@ -231,18 +234,18 @@ class SearchView(ListView):
     template_name = 'search.html'
     #def get(self, request):
         #return render(request, 'search.html', {})
+
     def get_queryset(self): # new
         query = self.request.GET.get('q', None)
         if query == None:
             return render(self.request, 'search.html', {})
-        
 
         object_list = MyUser.objects.filter(
-            Q(username__icontains=query) 
+            Q(username__icontains=query)
         )
-        
-        tag_list = Image.objects.all().filter(
-            Q(slug__icontains=query))
+
+        # tag_list = Image.objects.all().filter(
+        #     Q(slug__icontains=query))
         # object_list += [_image.tags.filter(
         #     Q(slug__icontains=query)) for _image in img_set]
         return object_list
