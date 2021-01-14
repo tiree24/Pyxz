@@ -1,0 +1,17 @@
+{% extends 'base.html' %}{% block content %}{% load static %} {% for user in displayuser %}
+<br>
+<div>
+  <a href="/profile/{{user.id}}/">
+    <ul>
+      <li>
+        <img
+          class="circle"
+          style="height: 66px; width: 66px"
+          src="{% static user.profile_pyxz %}"
+          alt="profile picture"
+        />{{ user.username }}
+      </li>
+    </ul>
+  </a>
+</div>
+{% endfor %}{% endblock %}
