@@ -247,4 +247,12 @@ class SearchView(ListView):
         #     Q(slug__icontains=query)) for _image in img_set]
         return object_list
 
+
+class UsersPageView(View):
+    def get(self, request):
+        html = 'users_page.html'
+        displayuser = MyUser.objects.all()
+        context = {'displayuser': displayuser}
+        return render(request, html, context)
+
     
