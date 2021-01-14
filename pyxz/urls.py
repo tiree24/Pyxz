@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView,  UnFollowView, FollowUserView, FollowTagsView, TopView, EditFormView, funcView, SearchView, UsersPageView
+from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView, UnFollowView, FollowUserView, FollowTagsView, TopView, EditFormView, funcView, SearchView, UsersPageView
 
 from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView, StoryUpload
 from auth_app.views import LoginFormView, LogoutView
@@ -52,4 +52,3 @@ urlpatterns = [
     path("search/", SearchView.as_view(), name='search'),
     path("users/", UsersPageView.as_view(), name='users'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
