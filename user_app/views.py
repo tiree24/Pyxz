@@ -257,5 +257,3 @@ class UsersPageView(View):
         displayuser = MyUser.objects.all()
         context = {'displayuser': displayuser}
         return render(request, html, context)
-
-    
