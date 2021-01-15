@@ -87,7 +87,7 @@ class ImageUpload(View):
             newimage.slug = slugify(newimage.title)
             newimage.save()
             form.save_m2m()
-            return render(request, 'homepage.html', {'form': form})
+            return HttpResponseRedirect(reverse('All'))
 
 class StoryUpload(View):
     html = 'storyupload.html'
@@ -106,7 +106,7 @@ class StoryUpload(View):
             newimage.is_story = True
             newimage.save()
             form.save_m2m()
-            return render(request, 'homepage.html', {'form': form})
+            return HttpResponseRedirect(reverse('All'))
     # def post(self, request):
     #     form = ImageForm(request.POST, request.FILES)
     #     if form.is_valid():

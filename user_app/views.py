@@ -77,7 +77,7 @@ class TopView(View):
 
     def get(self, request):
         comments = Comment.objects.all()
-        img_set = Image.objects.annotate(like_count=Count('likes')).order_by('-like_count')
+        img_set = Image.objects.filter(is_story=False).all().annotate(like_count=Count('likes')).order_by('-like_count')
         current_time = datetime.datetime.now(pytz.utc)
         def maths(current_time, post_time):
             numofdays = current_time - post_time
@@ -102,7 +102,7 @@ class FollowUserView(View):
     def get(self, request):
         following = request.user.following.all()
         comments = Comment.objects.all()
-        img_set = Image.objects.filter(myuser_id__in=following).all()
+        img_set = Image.objects.filter(is_story=False).all().filter(myuser_id__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
         def maths(current_time, post_time):
             numofdays = current_time - post_time
@@ -127,7 +127,7 @@ class FollowTagsView(View):
     def get(self, request):
         following = request.user.tags.all()
         comments = Comment.objects.all()
-        img_set = Image.objects.filter(tags__in=following).all()
+        img_set = Image.objects.filter(is_story=False).all().filter(tags__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
         def maths(current_time, post_time):
             numofdays = current_time - post_time
