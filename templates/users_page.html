@@ -1,28 +1,26 @@
-{% extends 'base.html' %}{% block content %}{% load static %} 
+{% extends 'base.html' %}{% block content %}{% load static %}
 
 <head>
   <style>
-    #user_container{
-      display:flex;
-      justify-content:center;
+    #user_container {
+      display: flex;
+      justify-content: center;
     }
-    #usr_box{
-      display:flex;
+    #usr_box {
+      display: flex;
       padding-top: 7px;
       align-items: center;
     }
   </style>
 </head>
 
-
-<br>
+<br />
 {% for user in displayuser %}
-<div id='user_container'>
-
-  <div class="collection" style='width: 500px;'>
-    <a  href="/profile/{{user.id}}/"  class="collection-item avatar">
+<div id="user_container">
+  <div class="collection" style="width: 500px">
+    <a href="/profile/{{user.id}}/" class="collection-item avatar">
       <ul>
-        <li id='usr_box'>
+        <li id="usr_box">
           <img
             class="circle"
             style="height: 66px; width: 66px"
@@ -31,7 +29,7 @@
           />
           <span class="title">.</span>
           <strong>
-            <p style='margin-left:20px;'>{{ user.username }}</p>
+            <p style="margin-left: 20px">{{ user.username }}</p>
           </strong>
         </li>
       </ul>
