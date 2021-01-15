@@ -247,15 +247,18 @@ class SearchView(ListView):
             Q(username__icontains=query) 
         )
         
-        tag_list = Image.tags.all().filter(
+        tag_list = Image.tags.filter(
             Q(slug__icontains=query))
-        breakpoint()
         image_title = Image.objects.filter(
-            Q(tags__icontains=query))
+            Q(title__icontains=query))
+        new_list = [x for x in object_list]
+        new_list += [x for x in image_title]
+        new_list += [x for x in tag_list]
+        
         
         # object_list += [_image.tags.filter(
         #     Q(slug__icontains=query)) for _image in img_set]
-        return object_list
+        return new_list 
 
 
 
