@@ -1,17 +1,16 @@
-from django.shortcuts import render, HttpResponseRedirect, reverse
+import datetime
 
-
-from django.views import View
-from django.views.generic import ListView
-from django.db.models import Count
-from photo_app.models import Image
-from user_app.models import MyUser
-from django.db.models import Q
-from user_app.forms import SignUpForm, UserEditForm
+import pytz
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
-import datetime
-import pytz
+from django.db.models import Count, Q
+from django.shortcuts import HttpResponseRedirect, render, reverse
+from django.views import View
+from django.views.generic import ListView
+from photo_app.models import Image
+
+from user_app.forms import SignUpForm, UserEditForm
+from user_app.models import MyUser
 
 
 class HomePage(View):

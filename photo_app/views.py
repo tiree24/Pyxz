@@ -1,20 +1,16 @@
-from django.shortcuts import render, redirect
-from photo_app.models import Image
-from photo_app.forms import ImageForm
-from user_app.models import MyUser
-
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
-
-from django.views import View
-
-# from taggit.models import Tag
-from django.template.defaultfilters import slugify
-
 from django.http import HttpResponseRedirect
-# Create your views here.
-
+from django.shortcuts import redirect, render
+from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.views import View
+from user_app.models import MyUser
+
+from photo_app.forms import ImageForm
+from photo_app.models import Image
+
+# Create your views here.
 
 
 class Image_view(View):
@@ -60,7 +56,7 @@ class TagCategory(View):
 
     def post(self, request, tag_title):
         form = CommentForm(request.POST)
-        # tag = Image.tags.get(slug=tag_title)
+
         if form.is_valid():
             data = form.cleaned_data
             img = Image.objects.get(photo=request.POST.get("title", ""))
@@ -78,7 +74,7 @@ class ImageUpload(View):
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
-        # image = Image.objects.all()
+
         if form.is_valid():
             newimage = form.save(commit=False)
             newimage.myuser = request.user

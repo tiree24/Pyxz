@@ -1,6 +1,8 @@
-from django.shortcuts import render, redirect
-from comment_app.models import Comment
+from django.shortcuts import redirect
 from user_app.models import MyUser
+
+from comment_app.models import Comment
+
 # Create your views here.
 
 
@@ -10,6 +12,7 @@ def CommentLikeUpView(request, comment_id):
     target.likes.add(auth_user)
     target.save()
     return redirect(request.META.get('HTTP_REFERER'))
+
 
 def CommentLikeDownView(request, comment_id):
     target = Comment.objects.get(id=comment_id)
