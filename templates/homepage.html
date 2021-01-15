@@ -27,12 +27,12 @@
 
 <div class="break"></div>
 <main class="z-depth-5">
-    <div class='row'>
+    <div id='homecontainer' class='row'>
       <div class='col s10'>
         
         {% include 'card_partial.html' with obj=img_set comments=comments form=form%}
       </div>
-      <div class="col s2 z-depth-3">{% include 'sidebar_partial.html' with obj=taglist %}</div>
+      <div class="col s2 z-depth-3" style='margin:20px;'>{% include 'sidebar_partial.html' with obj=taglist %}</div>
     </div>
   </div >
 </main>

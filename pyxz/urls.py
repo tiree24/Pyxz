@@ -37,7 +37,7 @@ urlpatterns = [
     path('profile/edit', funcView),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
-    path('img/<int:img_id>', Image_view.as_view()),
+    path('img/<int:img_id>/', Image_view.as_view()),
     path('tag/<slug:tag_title>/', TagCategory.as_view(), name='TagSub'),
     path("login/", LoginFormView.as_view(), name="login"),
     path("logout/", LogoutView.as_view()),
