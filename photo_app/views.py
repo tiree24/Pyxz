@@ -8,13 +8,15 @@ from comment_app.models import Comment
 
 from django.views import View
 
-# from taggit.models import Tag
+from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
 from django.http import HttpResponseRedirect
 # Create your views here.
 
-# from django.urls import reverse
+from django.urls import reverse
+
+
 
 
 class Image_view(View):
