@@ -210,7 +210,6 @@ def funcView(request):
             u = MyUser.objects.get(id=request.user.id)
             # u['profile_pyxz'] = request.POST['profile_pyxz'][0]
             u.save()
-            breakpoint()
             return render(request, 'homepage.html', {'form': form})
     else:
         form_data = {'bio': request.user.bio, 'tags': request.user.tags.all()}
