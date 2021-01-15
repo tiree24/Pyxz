@@ -47,7 +47,7 @@ urlpatterns = [
     path("likedown/<int:img_id>/", LikeDownView),
     path("follow/<int:user_id>/", FollowView),
     path("unfollow/<int:user_id>/", UnFollowView),
-    path("commentlikeup/<int:comment_id>/", CommentLikeUpView), 
+    path("commentlikeup/<int:comment_id>/", CommentLikeUpView),
     path("commentlikedown/<int:comment_id>/", CommentLikeDownView),
     path("search/", SearchView.as_view(), name='search'),
     path("users/", UsersPageView.as_view(), name='users'),

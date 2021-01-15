@@ -6,9 +6,6 @@ from django.views.generic import ListView
 from django.db.models import Count
 from photo_app.models import Image
 from user_app.models import MyUser
-from photo_app.models import Image, TaggableManager
-# from django.template.defaultfilters import slugify
-from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from user_app.forms import SignUpForm, UserEditForm
 from comment_app.forms import CommentForm
@@ -57,7 +54,7 @@ class OrderedView(View):
         img_set = Image.objects.filter(is_story=False).all().order_by(order_by)[::-1]
         stories = Image.objects.filter(is_story=True).all()
         tags = Image.tags.all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':tags   })
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags   })
 
     def post(self, request):
         form = CommentForm(request.POST)
