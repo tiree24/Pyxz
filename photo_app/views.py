@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from photo_app.models import Image, TaggableManager
+from photo_app.models import Image
 from photo_app.forms import ImageForm
 from user_app.models import MyUser
 
@@ -8,15 +8,13 @@ from comment_app.models import Comment
 
 from django.views import View
 
-from taggit.models import Tag
+# from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
 from django.http import HttpResponseRedirect
 # Create your views here.
 
 from django.urls import reverse
-
-
 
 
 class Image_view(View):
@@ -26,7 +24,7 @@ class Image_view(View):
         i = Image.objects.get(id=img_id)
         t = i.tags.all()
         comments = Comment.objects.filter(photo_linked_id=img_id)
-        return render(request, "image_detail.html", {"i": i, "t": t, 'comments':comments, 'form': form})
+        return render(request, "image_detail.html", {"i": i, "t": t, 'comments': comments, 'form': form})
 
     def post(self, request, img_id):
         form = CommentForm(request.POST)
@@ -58,7 +56,7 @@ class TagCategory(View):
         """ Need this or a way to capture your photos .all() or .get()"""
         comments = Comment.objects.all()
         """ Need this """
-        return render(request, self.html, {'tag':tag,'img_set': img_set, 'comments': comments, 'form': self.form}) 
+        return render(request, self.html, {'tag': tag, 'img_set': img_set, 'comments': comments, 'form': self.form})
 
     def post(self, request, tag_title):
         form = CommentForm(request.POST)
@@ -108,16 +106,6 @@ class StoryUpload(View):
             newimage.save()
             form.save_m2m()
             return HttpResponseRedirect(reverse('All'))
-    # def post(self, request):
-    #     form = ImageForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         data = form.cleaned_data
-    #         image = Image.objects.create(slug= data['title'], 
-    #         photo= data['photo'], description= data['description'], 
-    #         tags= data['tags'], is_story =True, myuser = request.user)
-    #         return HttpResponseRedirect(reverse('All'))
-    #     else:
-    #         return render(request, self.html, {'form': form})
 
 
 def LikeUpView(request, img_id):

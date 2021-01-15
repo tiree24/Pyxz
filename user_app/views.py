@@ -6,9 +6,6 @@ from django.views.generic import ListView
 from django.db.models import Count
 from photo_app.models import Image
 from user_app.models import MyUser
-from photo_app.models import Image, TaggableManager
-from django.template.defaultfilters import slugify
-from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from user_app.forms import SignUpForm, UserEditForm
 from comment_app.forms import CommentForm
@@ -56,12 +53,13 @@ class OrderedView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().order_by(order_by)[::-1]
         current_time = datetime.datetime.now(pytz.utc)
+
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
-        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags   })
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -82,11 +80,12 @@ class TopView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().annotate(like_count=Count('likes')).order_by('-like_count')
         current_time = datetime.datetime.now(pytz.utc)
+
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
-        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -107,12 +106,13 @@ class FollowUserView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().filter(myuser_id__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
+
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
-        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist':tags   })
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -133,12 +133,13 @@ class FollowTagsView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().filter(tags__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
+
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
-        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags   })
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -259,9 +260,8 @@ def UnFollowView(request, user_id):
 class SearchView(ListView):
     model = MyUser, Image
     template_name = 'search.html'
-    #def get(self, request):
-        #return render(request, 'search.html', {})
-    def get(self, request): # new
+
+    def get(self, request):
         query = self.request.GET.get('q', None)
         if query is None:
             return render(self.request, 'search.html', {})
@@ -277,12 +277,7 @@ class SearchView(ListView):
         new_list = [x for x in object_list]
         new_list += [x for x in image_title]
         new_list += [x for x in tag_list]
-        # <!-- {% if obj.__class__.__name__ == 'MyUser' %}
-        # <li>{{ obj.username }}</li>
-        # {% endif %} -->
-        # object_list += [_image.tags.filter(
-        #     Q(slug__icontains=query)) for _image in img_set]
-        return render(self.request, 'search.html', {'new_list':new_list})
+        return render(self.request, 'search.html', {'new_list': new_list})
 
 
 class UsersPageView(View):
