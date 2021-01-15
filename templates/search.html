@@ -9,6 +9,7 @@
   </style>
 
 </head> -->
+{% load static %}
 
 <div class=container >
   <h1>Search Results</h1>
@@ -19,8 +20,11 @@
 
       {% for obj in new_list %} 
         {% if obj.get_class_name == 'MyUser' %}
-            <a href="/profile/{{obj.id}}/" class="collection-item">
-              <li>User: {{ obj.username }}</li>
+            <a href="/profile/{{obj.id}}/" class="collection-item avatar">
+              <li >
+                <img src='{% static obj.profile_pyxz %}' alt="" class="circle">
+                <span class="title"> User: {{ obj.username }}</span>
+               </li>
             </a>
         {% endif %}
       {% endfor %}
