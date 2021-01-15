@@ -246,9 +246,9 @@ class SearchView(ListView):
     #def get(self, request):
         #return render(request, 'search.html', {})
 
-    def get_queryset(self): # new
+    def get_queryset(self):  # new
         query = self.request.GET.get('q', None)
-        if query == None:
+        if query is None:
             return render(self.request, 'search.html', {})
 
         object_list = MyUser.objects.filter(
