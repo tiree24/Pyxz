@@ -6,6 +6,9 @@ from django.views.generic import ListView
 from django.db.models import Count
 from photo_app.models import Image
 from user_app.models import MyUser
+from photo_app.models import Image, TaggableManager
+from django.template.defaultfilters import slugify
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from user_app.forms import SignUpForm, UserEditForm
 from comment_app.forms import CommentForm
