@@ -6,12 +6,7 @@
 <h1>Search Results</h1>
 
 <ul>
-  {% for user in object_list %}
-  <li>{{ user.username }}</li>
-  {% endfor %}
-</ul>
-<ul>
-  {% for user in tag_list %}
-  <li>{{ user.username }}</li>
+  {% for obj in new_list %}
+  <li>{{ obj.username }}</li>
   {% endfor %}
 </ul>
