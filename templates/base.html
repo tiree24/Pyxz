@@ -15,6 +15,15 @@
         justify-content: space-between;
         align-content: space-between;
       }
+      #searchbar{
+        display:flex;
+        align-items:center;
+
+      }
+      #homecontainer{
+        display:flex;
+        flex-direction:row;
+      }
     </style>
 
     <!--Import Google Icon Font-->
@@ -55,8 +64,19 @@
             <li class="btn"><a href="/upload">Upload</a></li>
             <li class="tab"><a href="/profile/{{user.id}}/">Profile</a></li>
             {% endif%}
-            <li class="tab"><a href="/admin">Admin</a></li>
             <li class="tab"><a href="/">HOME</a></li>
+            <li class="tab">
+              <form action="{% url 'search' %}" method="get">
+                <div id='searchbar'>
+
+                  <i class="material-icons prefix" style="padding-bottom:50px;">search</i>
+                  <div class="input-field col s6">
+                    <input name="q" type="text" placeholder="Search..." />
+                    <a href="/search/"></a>
+                  </form>
+                  </div>
+                </div>
+            </li>
           </ul>
           
       </div>

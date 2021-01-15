@@ -1,8 +1,18 @@
-#Tags
+<blockquote>
+    <h5>#Tags</h5>
+</blockquote>
 {% for tag in taglist %}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <li><a href="/tag/{{tag.slug}}">#{{tag}}</a></li>
 =======
 <ul><li><a href="/tag/{{tag.slug}}">#{{tag}}</a></li></ul>
 >>>>>>> 32ad0953e10cc042a21164e22166dcdfdb69a715
+=======
+<ul class="collection">
+    <li>
+        <a href="/tag/{{tag.slug}}" class="collection-item">#{{tag}}</a>
+    </li>
+</ul>
+>>>>>>> 91d6be23cb6f02ed0fe820f4dd03a0e0cc119832
 {% endfor %}

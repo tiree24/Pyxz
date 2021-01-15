@@ -53,7 +53,11 @@ class OrderedView(View):
     def get(self, request, order_by):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().order_by(order_by)[::-1]
-        stories = Image.objects.filter(is_story=True).all()
+        current_time = datetime.datetime.now(pytz.utc)
+        def maths(current_time, post_time):
+            numofdays = current_time - post_time
+            return numofdays.days
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':tags   })
 
@@ -73,9 +77,13 @@ class TopView(View):
 
     def get(self, request):
         comments = Comment.objects.all()
-        img_set = Image.objects.annotate(like_count=Count('likes')).order_by('-like_count')
-        # stories = Image.objects.filter(is_story=True).all()
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':'stories'   })
+        img_set = Image.objects.filter(is_story=False).all().annotate(like_count=Count('likes')).order_by('-like_count')
+        current_time = datetime.datetime.now(pytz.utc)
+        def maths(current_time, post_time):
+            numofdays = current_time - post_time
+            return numofdays.days
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -94,8 +102,12 @@ class FollowUserView(View):
     def get(self, request):
         following = request.user.following.all()
         comments = Comment.objects.all()
-        img_set = Image.objects.filter(myuser_id__in=following).all()
-        stories = Image.objects.filter(is_story=True).all()
+        img_set = Image.objects.filter(is_story=False).all().filter(myuser_id__in=following).all()
+        current_time = datetime.datetime.now(pytz.utc)
+        def maths(current_time, post_time):
+            numofdays = current_time - post_time
+            return numofdays.days
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist':tags   })
 
@@ -115,8 +127,12 @@ class FollowTagsView(View):
     def get(self, request):
         following = request.user.tags.all()
         comments = Comment.objects.all()
-        img_set = Image.objects.filter(tags__in=following).all()
-        stories = Image.objects.filter(is_story=True).all()
+        img_set = Image.objects.filter(is_story=False).all().filter(tags__in=following).all()
+        current_time = datetime.datetime.now(pytz.utc)
+        def maths(current_time, post_time):
+            numofdays = current_time - post_time
+            return numofdays.days
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags   })
 
@@ -237,7 +253,7 @@ class SearchView(ListView):
     template_name = 'search.html'
     #def get(self, request):
         #return render(request, 'search.html', {})
-    def get_queryset(self): # new
+    def get(self, request): # new
         query = self.request.GET.get('q', None)
         if query == None:
             return render(self.request, 'search.html', {})
@@ -254,12 +270,12 @@ class SearchView(ListView):
         new_list = [x for x in object_list]
         new_list += [x for x in image_title]
         new_list += [x for x in tag_list]
-        
-        
+        # <!-- {% if obj.__class__.__name__ == 'MyUser' %}
+        # <li>{{ obj.username }}</li>
+        # {% endif %} -->
         # object_list += [_image.tags.filter(
         #     Q(slug__icontains=query)) for _image in img_set]
-        return new_list 
-
+        return render(self.request, 'search.html', {'new_list':new_list})
 
 
 
