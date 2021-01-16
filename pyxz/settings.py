@@ -81,14 +81,13 @@ WSGI_APPLICATION = 'pyxz.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ddkshuuqkfdmh5',
-        'HOST': 'ec2-34-192-72-159.compute-1.amazonaws.com',
+        'NAME': 'd1bnumokggnlcq',
+        'HOST': 'ec2-18-208-49-190.compute-1.amazonaws.com',
         'PORT': 5432,
-        'USERNAME': 'alpnzadgnmbasr',
-        'PASSWORD': 'a07cb6b3218d81c18fb587e87d6149f5c3443a4acb882d1d3983533763db3804',
+        'USERNAME': 'zcmlogqkhviykx',
+        'PASSWORD': 'ba40238f487374f61b825efe2abfd3295f7fccd6290f157f54fb210da7aace94',
     }
 }
-
 STATICFILES_DIRS = [
     BASE_DIR / "",
     '/static/i/',
