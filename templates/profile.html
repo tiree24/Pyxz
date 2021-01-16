@@ -1,22 +1,22 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 <div class='container'>
-  <div class="card">
+  <div class="card center">
     <div class="card-title"> 
       <img class ="circle" style='height: 66px; width:66px' src='{% static user.profile_pyxz %}' alt="profile picture">
       Hello, {{user}}! 
     </div>  
 
-  <a href="/profile/edit"><button>edit</button></a></h1>
-  <a href="/follow/{{ user.id }}/"><button>Follow</button></a>
-  <a href="/unfollow/{{ user.id }}/"><button>Unfollow</button></a>
-  <p>Following {{user.get_following_num}} users: 
+  <a href="/profile/edit" class='btn waves-effect waves-light'>edit</a></h1>
+  <a href="/follow/{{ user.id }}/" class='btn waves-effect waves-light'>Follow</a>
+  <a href="/unfollow/{{ user.id }}/" class='btn waves-effect waves-light'>Unfollow</a>
+  <h6>Following {{user.get_following_num}} users: 
     {% for name in user.following.all %}
       <a  href='/profile/{{name.id}}'>{{name}}, </a>
     {% endfor %}
-  </p>
-  <h3>Date Joined:{{user.date_joined}}</h3>
+  </h6>
+  <h8>Date Joined:{{user.date_joined}}</h8>
   <p class="card-content">{{user.bio}}</p>
-  tags: {%for tag in user.tags.all%}
+  Tags You Follow: {%for tag in user.tags.all%}
   <a  href='/tag/{{tag.slug}}'>#{{tag}}, </a>
   {% endfor %}
 </div>

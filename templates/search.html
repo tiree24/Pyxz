@@ -1,14 +1,19 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}{% block content %}
-<!-- <head>
-  <style>
-    #container {
-      display:flex;
 
+<head>
+  <style>
+    #user_container {
+      display: flex;
+      justify-content: center;
+    }
+    #usr_box {
+      display: flex;
+      padding-top: 20px;
+      align-items: center;
     }
   </style>
-
-</head> -->
+</head>
 {% load static %}
 
 <div class="container">
@@ -19,9 +24,11 @@
     <div class="collection">
       {% for obj in new_list %} {% if obj.get_class_name == 'MyUser' %}
       <a href="/profile/{{obj.id}}/" class="collection-item avatar">
-        <li>
+        <li id="usr_box">
           <img src="{% static obj.profile_pyxz %}" alt="" class="circle" />
-          <span class="title"> User: {{ obj.username }}</span>
+          <span class="title">
+            <strong> User: {{ obj.username }} </strong>
+          </span>
         </li>
       </a>
       {% endif %} {% endfor %}
@@ -31,7 +38,9 @@
     <div class="collection">
       {% for obj in new_list %} {% if obj.get_class_name == 'Image' %}
       <a href="/img/{{obj.id}}/" class="collection-item">
-        <li>{{ obj.title }}</li>
+        <li>
+          <strong> {{ obj.title }} </strong>
+        </li>
       </a>
       {% endif %} {% endfor %}
     </div>
@@ -39,6 +48,3 @@
 </div>
 
 {% endblock %}
-<!-- {% if obj.get_class_name == '' %}
-         <li>{{ obj. }}</li>
-  {% endif %} -->
