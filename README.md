@@ -28,6 +28,8 @@ PS. if you could replicate what i did in the homepage everywhere pictures show u
 https://devcenter.heroku.com/articles/getting-started-with-python
 pipenv install gunicorn  
 gUnicorn Command
+stoped static collection:
+heroku config:set DISABLE_COLLECTSTATIC=1
 
 start dev server:
 gunicorn --env DJANGO_SETTINGS_MODULE=pyxz.settings pyxz.wsgi
