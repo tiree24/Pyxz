@@ -1,8 +1,6 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from taggit.managers import TaggableManager
-
-
-from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
@@ -16,6 +14,7 @@ class MyUser(AbstractUser):
     slug = models.SlugField(unique=True, max_length=100, null=True, blank=True)
     tags = TaggableManager()
     # set releted field to tags to allow user to view the things that interest them
+
     def __str__(self):
         return self.username
 
@@ -27,4 +26,3 @@ class MyUser(AbstractUser):
 
     def get_class_name(self):
         return self.__class__.__name__
-

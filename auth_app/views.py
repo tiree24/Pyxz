@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm
-from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.shortcuts import HttpResponseRedirect, render, reverse
 from django.views.generic import View
+
+from .forms import LoginForm
+
 # Create your views here.
 
 
@@ -26,10 +28,3 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse('All'))
-
-
-# def Error404View(request, exception):
-#     return render(request,'404.html')
-
-
-

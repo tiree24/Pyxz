@@ -103,6 +103,7 @@ class StoryUpload(View):
             form.save_m2m()
             return HttpResponseRedirect(reverse('All'))
 
+
 def LikeUpView(request, img_id):
     target = Image.objects.get(id=img_id)
     auth_user = MyUser.objects.get(id=request.user.id)
