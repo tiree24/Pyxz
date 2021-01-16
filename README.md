@@ -24,3 +24,10 @@ have fun guys!!
 slack me with what you think so far i might be able to catch a meeting before 9am...MAYBE
 
 PS. if you could replicate what i did in the homepage everywhere pictures show up that would be cool... i can also do it later on.
+
+https://devcenter.heroku.com/articles/getting-started-with-python
+pipenv install gunicorn  
+gUnicorn Command
+
+start dev server:
+gunicorn --env DJANGO_SETTINGS_MODULE=pyxz.settings pyxz.wsgi
