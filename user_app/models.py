@@ -25,3 +25,6 @@ class MyUser(AbstractUser):
     def get_following_num(self):
         return self.following.count()
 
+    def get_class_name(self):
+        return self.__class__.__name__
+

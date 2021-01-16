@@ -21,6 +21,9 @@ class Image(models.Model):
     def score(self):
         return len(self.likes.all())
 
+    def get_class_name(self):
+        return self.__class__.__name__
+
 
 
 # Display for this many hours (int field)

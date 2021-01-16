@@ -1,17 +1,67 @@
 <!-- templates/home.html -->
-<h1>HomePage</h1>
-<form action="{% url 'search' %}" method="get">
-  <input name="q" type="text" placeholder="Search..." />
-</form>
-<h1>Search Results</h1>
+{% extends 'base.html' %}{% block content %}
+<head>
+  <style>
+    #user_container{
+      display:flex;
+      justify-content:center;
+    }
+    #usr_box{
+      display:flex;
+      padding-top: 20px;
+      align-items: center;
+    }
+  </style>
+</head>
+{% load static %}
 
-<ul>
-  {% for user in object_list %}
-  <li>{{ user.username }}</li>
-  {% endfor %}
-</ul>
-<ul>
-  {% for user in tag_list %}
-  <li>{{ user.username }}</li>
-  {% endfor %}
-</ul>
+<div class=container >
+  <h1>Search Results</h1>
+  
+  <ul>
+    
+
+    <h3>User Names</h3>
+    <div class="collection">
+
+      {% for obj in new_list %} 
+        {% if obj.get_class_name == 'MyUser' %}
+            <a href="/profile/{{obj.id}}/" class="collection-item avatar">
+              <li id='usr_box'>
+                <img src='{% static obj.profile_pyxz %}' alt="" class="circle">
+                <span class="title"> 
+                  <strong>
+
+                    User: {{ obj.username }}
+                  </strong>
+                </span>
+               </li>
+            </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  
+    <h3>Image Titles</h3>
+    <div class="collection">
+
+      {% for obj in new_list %} 
+        {% if obj.get_class_name == 'Image' %}
+            <a href="/img/{{obj.id}}/" class="collection-item">
+              <li>
+                <strong>
+                  {{ obj.title }}
+                </strong>
+              </li>
+            </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </ul>
+</div>
+
+{% endblock %}
+  <!-- {% if obj.get_class_name == '' %}
+         <li>{{ obj. }}</li>
+  {% endif %} -->
+  

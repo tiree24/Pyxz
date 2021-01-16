@@ -1,17 +1,41 @@
-{% extends 'base.html' %}{% block content %}{% load static %} {% for user in displayuser %}
+{% extends 'base.html' %}{% block content %}{% load static %} 
+
+<head>
+  <style>
+    #user_container{
+      display:flex;
+      justify-content:center;
+    }
+    #usr_box{
+      display:flex;
+      padding-top: 7px;
+      align-items: center;
+    }
+  </style>
+</head>
+
+
 <br>
-<div>
-  <a href="/profile/{{user.id}}/">
-    <ul>
-      <li>
-        <img
-          class="circle"
-          style="height: 66px; width: 66px"
-          src="{% static user.profile_pyxz %}"
-          alt="profile picture"
-        />{{ user.username }}
-      </li>
-    </ul>
-  </a>
+{% for user in displayuser %}
+<div id='user_container'>
+
+  <div class="collection" style='width: 500px;'>
+    <a  href="/profile/{{user.id}}/"  class="collection-item avatar">
+      <ul>
+        <li id='usr_box'>
+          <img
+            class="circle"
+            style="height: 66px; width: 66px"
+            src="{% static user.profile_pyxz %}"
+            alt="profile picture"
+          />
+          <span class="title">.</span>
+          <strong>
+            <p style='margin-left:20px;'>{{ user.username }}</p>
+          </strong>
+        </li>
+      </ul>
+    </a>
+  </div>
 </div>
 {% endfor %}{% endblock %}
