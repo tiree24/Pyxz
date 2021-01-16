@@ -77,15 +77,18 @@ WSGI_APPLICATION = 'pyxz.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+import dj_database_url
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ddkshuuqkfdmh5',
+        'HOST': 'ec2-34-192-72-159.compute-1.amazonaws.com',
+        'PORT': 5432,
+        'USERNAME': 'alpnzadgnmbasr',
+        'PASSWORD': 'a07cb6b3218d81c18fb587e87d6149f5c3443a4acb882d1d3983533763db3804',
     }
 }
-
-
 
 STATICFILES_DIRS = [
     BASE_DIR / "",

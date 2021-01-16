@@ -15,6 +15,7 @@ idna==2.10
 mccabe==0.6.1
 mimesis==4.1.2
 Pillow==8.1.0
+psycopg2==2.8.6
 pycodestyle==2.6.0
 pyflakes==2.2.0
 python-dateutil==1.5
