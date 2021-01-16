@@ -1,0 +1,10 @@
+<blockquote>
+  <h5>#Tags</h5>
+</blockquote>
+{% for tag in taglist %}
+<ul class="collection">
+  <li>
+    <a href="/tag/{{tag.slug}}" class="collection-item">#{{tag}}</a>
+  </li>
+</ul>
+{% endfor %}

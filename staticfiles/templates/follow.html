@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %} 
+<body>
+  <a href="/follow/{{ profile_user.id }}/">Follow</a>
+<a href="/unfollow/{{ profile_user.id }}/">Unfollow</a>
+  <div class="message-section" style="display:none;"></div>
+  {% for user_profile in all_user_profiles %}
+      <button data-url="{% url "example_app.views.follow_user" user_profile_id=user_profile.id %}"
+              class="follow-button" type="button">Follow</button>
+  {% endfor %}
+</body>

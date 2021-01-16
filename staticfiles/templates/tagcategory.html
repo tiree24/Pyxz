@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Welcome to #{{tag}}!</h1>
+<h3>All Pyxz's</h3>
+<br />
+{% load static %}
+
+<div>
+  {% include 'card_partial.html' with obj=img_set comments=comments form=form %}
+</div>
+
+{% endblock %}

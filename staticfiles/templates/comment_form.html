@@ -1,0 +1,14 @@
+{% extends 'tagcategory.html' %}
+
+{% block comment %}
+    <div>hello</div>
+    <form method="POST" action="">
+        
+                {% csrf_token %}
+                {{ form.as_p }}
+        
+                <button type="submit" value="Post" class="btn btn-dark">Submit!</button>
+
+    </form>
+    
+{% endblock %}

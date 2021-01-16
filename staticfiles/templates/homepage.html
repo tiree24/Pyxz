@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}   {% load static %}
+
+
+  <div class="container">
+    <div class="story" style="height:150px; display: flex">
+      {% include 'story_partial.html' with obj=stories comments=comments form=form%}
+    </div>
+  </div>
+  
+  <nav class="nav-extended blue-grey lighten-2">
+    </div>
+      <div class="nav-content">
+        <ul class="tabs tabs-transparent">
+          {% if not user.is_authenticated %}
+          <li class="tab"><a href="/">All</a></li>
+          <li class="tab"><a href="/order/post_time/">new</a></li>
+          <li class="tab"><a href="/order/likes/">top</a></li>
+          {% else %}
+          <li class="tab"><a href="/">All</a></li>
+          <li class="tab"><a href="/order/post_time/">new</a></li>
+          <li class="tab"><a href="/order/likes/">top</a></li>
+          <li class="tab"><a href="/following/">followed users</a></li>
+          <li class="tab"><a href="/followingtags/">followed tags*</a></li>
+          {% endif%}
+        </ul>
+  </nav>
+
+<div class="break"></div>
+<main class="z-depth-5">
+    <div id='homecontainer' class='row'>
+      <div class='col s10'>
+        
+        {% include 'card_partial.html' with obj=img_set comments=comments form=form%}
+      </div>
+      <div class="col s2 z-depth-3" style='margin:20px;'>{% include 'sidebar_partial.html' with obj=taglist %}</div>
+    </div>
+  </div >
+</main>
+{% endblock %}
