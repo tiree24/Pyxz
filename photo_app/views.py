@@ -69,14 +69,12 @@ class TagCategory(View):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
 class ImageUpload(View):
     html = 'imageupload.html'
 
     def get(self, request):
         form = ImageForm()
         return render(request, 'imageupload.html', {'form': form})
-
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
@@ -88,6 +86,7 @@ class ImageUpload(View):
             newimage.save()
             form.save_m2m()
             return HttpResponseRedirect(reverse('All'))
+
 
 class StoryUpload(View):
     html = 'storyupload.html'
@@ -119,7 +118,6 @@ class StoryUpload(View):
     #         return render(request, self.html, {'form': form})
             
 
-
 def LikeUpView(request, img_id):
     target = Image.objects.get(id=img_id)
     auth_user = MyUser.objects.get(id=request.user.id)
@@ -127,6 +125,7 @@ def LikeUpView(request, img_id):
     print(target.likes.all)
     target.save()
     return redirect(request.META.get('HTTP_REFERER'))
+
 
 def LikeDownView(request, img_id):
     target = Image.objects.get(id=img_id)
