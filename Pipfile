@@ -9,6 +9,7 @@ django-taggit = "*"
 gunicorn = "*"
 psycopg2 = "*"
 whitenoise = "*"
+django-heroku = "*"
 
 [dev-packages]
 
