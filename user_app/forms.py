@@ -8,7 +8,7 @@ class UserEditForm(forms.ModelForm):
 
 
 
-class SignUpForm(forms.Form):
+class SignUpForm(forms.ModelForm):
     class Meta:
         model = MyUser
         fields = ['username', 'first_name', 'last_name', 'email', 'password', 'profile_pyxz']
