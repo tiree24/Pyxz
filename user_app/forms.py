@@ -11,7 +11,7 @@ class UserEditForm(forms.ModelForm):
 class SignUpForm(forms.ModelForm):
     class Meta:
         model = MyUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'profile_pyxz']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'profile_pyxz', 'is_superuser']
 
 
 class LoginForm(forms.Form):
