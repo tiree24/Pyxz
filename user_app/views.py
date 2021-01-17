@@ -18,7 +18,7 @@ import pytz
 
 
 class HomePage(View):
-    
+
     html = 'homepage.html'
     form = CommentForm()
 
@@ -28,6 +28,7 @@ class HomePage(View):
         img_set = Image.objects.filter(is_story=False).all()
         # stories = Image.objects.filter(is_story=True).all()
         current_time = datetime.datetime.now(pytz.utc)
+
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
@@ -45,8 +46,9 @@ class HomePage(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 class OrderedView(View):
-    
+
     html = 'homepage.html'
     form = CommentForm()
 
@@ -54,6 +56,7 @@ class OrderedView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().order_by(order_by)[::-1]
         current_time = datetime.datetime.now(pytz.utc)
+
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
@@ -70,8 +73,9 @@ class OrderedView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 class TopView(View):
-    
+
     html = 'homepage.html'
     form = CommentForm()
 
@@ -79,6 +83,7 @@ class TopView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().annotate(like_count=Count('likes')).order_by('-like_count')
         current_time = datetime.datetime.now(pytz.utc)
+        
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
@@ -104,6 +109,7 @@ class FollowUserView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().filter(myuser_id__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
+
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
@@ -120,6 +126,7 @@ class FollowUserView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 class FollowTagsView(View):
     html = 'homepage.html'
     form = CommentForm()
@@ -129,6 +136,7 @@ class FollowTagsView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().filter(tags__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
+
         def maths(current_time, post_time):
             numofdays = current_time - post_time
             return numofdays.days
@@ -144,7 +152,11 @@ class FollowTagsView(View):
             model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 """ Follow this example to add photos/comments to any view """
+
+
 class Profile(View):
 
     html = 'profile.html'
@@ -167,7 +179,6 @@ class Profile(View):
             model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 
 
 class SignUp(View):
@@ -194,6 +205,7 @@ class SignUp(View):
             )
             return HttpResponseRedirect(reverse('All'))
 
+
 class EditFormView(View):
     def get(self, request):
         form_data = {'bio': request.user.bio, 'tags': request.user.tags.all()}
@@ -214,6 +226,7 @@ class EditFormView(View):
             u.save()
             breakpoint()
             return render(request, 'homepage.html', {'form': form})
+
 
 def funcView(request):
     if request.POST:
@@ -277,7 +290,6 @@ class SearchView(ListView):
         return render(self.request, 'search.html', {'new_list':new_list})
 
 
-
 class UsersPageView(View):
     def get(self, request):
         html = 'users_page.html'
@@ -285,4 +297,4 @@ class UsersPageView(View):
         context = {'displayuser': displayuser}
         return render(request, html, context)
 
-    
+
