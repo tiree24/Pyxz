@@ -16,7 +16,7 @@ class SignUpForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
     profile_pyxz = forms.ImageField()
-    is_superuser = forms.BooleanField()
+    is_superuser = forms.BooleanField(required=False)
 
 class LoginForm(forms.Form):
 
