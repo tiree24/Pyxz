@@ -8,7 +8,6 @@ django = "*"
 django-taggit = "*"
 gunicorn = "*"
 psycopg2 = "*"
-postgres = "*"
 
 [dev-packages]
 

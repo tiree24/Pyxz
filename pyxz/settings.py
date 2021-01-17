@@ -25,7 +25,7 @@ SECRET_KEY = 'm-p7=5cv2@#n@ozvvzk+b1eg0&z_i9vk7$6a(px7mt5kbxobd9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://127.0.0.1:8000/','*', 'pyxz.herokuapp.com/']
+ALLOWED_HOSTS = ['http://127.0.0.1:8000/','*', 'pyxz.herokuapp.com/', '0.0.0.0']
 
 
 # Application definition
@@ -75,9 +75,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'pyxz.wsgi.application'
 
 
-# Database
+# Databaseheroku config
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+# import dj-database-url
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -86,8 +86,10 @@ DATABASES = {
         'PORT': 5432,
         'USERNAME': 'zcmlogqkhviykx',
         'PASSWORD': 'ba40238f487374f61b825efe2abfd3295f7fccd6290f157f54fb210da7aace94',
+        "sslmode":"require",
     }
 }
+
 STATICFILES_DIRS = [
     BASE_DIR / "",
     '/static/i/',
@@ -136,5 +138,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "static/i")
 AUTH_USER_MODEL = "user_app.MyUser"
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
