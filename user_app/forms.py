@@ -9,13 +9,10 @@ class UserEditForm(forms.ModelForm):
 
 
 class SignUpForm(forms.Form):
+    class Meta:
+        model = MyUser
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'profile_pyxz']
 
-    username = forms.CharField(max_length=150)
-    first_name = forms.CharField(max_length=100)
-    last_name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    profile_pyxz = forms.ImageField()
 
 class LoginForm(forms.Form):
 
