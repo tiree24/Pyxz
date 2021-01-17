@@ -144,4 +144,4 @@ AUTH_USER_MODEL = "user_app.MyUser"
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-django_heroku.settings(locals())
+django_heroku.settings(locals()) 
