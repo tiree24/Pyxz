@@ -2,7 +2,9 @@
 <div class='container'>
   <div class="card center">
     <div class="card-title"> 
+      {%if user.profile_pyxz %}
       <img class ="circle" style='height: 66px; width:66px' src='{% static user.profile_pyxz %}' alt="profile picture">
+      {%endif%}
       Hello, {{user}}! 
     </div>  
 
