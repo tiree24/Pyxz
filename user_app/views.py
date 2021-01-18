@@ -34,8 +34,9 @@ class HomePage(View):
             return numofdays.days
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
-        five_random_tags = [random.choice(tags) for i in range(5)]
-        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':five_random_tags}
+        random_tags = [random.choice(tags) for i in range(5)]
+        five_random = [random.choice(stories) for i in range(5)]
+        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags}
         return render(request, self.html, context)
 
     def post(self, request):
