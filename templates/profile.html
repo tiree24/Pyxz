@@ -1,28 +1,60 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
-<div class='container'>
-  <div class="card center">
-    <div class="card-title"> 
-      <img class ="circle" style='height: 66px; width:66px' src='{% static user.profile_pyxz %}' alt="profile picture">
-      Hello, {{user}}! 
-    </div>  
 
-  <a href="/profile/edit" class='btn waves-effect waves-light'>edit</a></h1>
-  <a href="/follow/{{ user.id }}/" class='btn waves-effect waves-light'>Follow</a>
-  <a href="/unfollow/{{ user.id }}/" class='btn waves-effect waves-light'>Unfollow</a>
-  <h6>Following {{user.get_following_num}} users: 
-    {% for name in user.following.all %}
-      <a  href='/profile/{{name.id}}'>{{name}}, </a>
+{% if user.get_profilepic_status == True %}
+  <div class='container'>
+    <div class="card center">
+      <div class="card-title"> 
+        <img class ="circle" style='height: 66px; width:66px' src='{% static user.profile_pyxz %}' alt="profile picture">
+        Hello, {{user}}! 
+      </div>  
+
+    <a href="/profile/edit" class='btn waves-effect waves-light'>edit</a></h1>
+    <a href="/follow/{{ user.id }}/" class='btn waves-effect waves-light'>Follow</a>
+    <a href="/unfollow/{{ user.id }}/" class='btn waves-effect waves-light'>Unfollow</a>
+    <h6>Following {{user.get_following_num}} users: 
+      {% for name in user.following.all %}
+        <a  href='/profile/{{name.id}}'>{{name}}, </a>
+      {% endfor %}
+    </h6>
+    <h8>Date Joined:{{user.date_joined}}</h8>
+    <p class="card-content">{{user.bio}}</p>
+    Tags You Follow: {%for tag in user.tags.all%}
+    <a  href='/tag/{{tag.slug}}'>#{{tag}}, </a>
     {% endfor %}
-  </h6>
-  <h8>Date Joined:{{user.date_joined}}</h8>
-  <p class="card-content">{{user.bio}}</p>
-  Tags You Follow: {%for tag in user.tags.all%}
-  <a  href='/tag/{{tag.slug}}'>#{{tag}}, </a>
-  {% endfor %}
-</div>
-<br />
+  </div>
+  <br />
 
-<h3>Your Pyxz's</h3>
-  <div>{% include 'card_partial.html' with obj=img_set form=form %}</div>
-</div>
+  <h3>Your Pyxz's</h3>
+    <div>{% include 'card_partial.html' with obj=img_set form=form %}</div>
+  </div>
+{% else %}
+
+  <div class='container'>
+    <div class="card center">
+      <div class="card-title"> 
+        <img class ="circle" style='height: 66px; width:66px' src="https://upload.wikimedia.org/wikipedia/en/1/1b/NPC_wojak_meme.png" alt="profile picture">
+        Hello, {{user}}! 
+      </div>  
+
+    <a href="/profile/edit" class='btn waves-effect waves-light'>edit</a></h1>
+    <a href="/follow/{{ user.id }}/" class='btn waves-effect waves-light'>Follow</a>
+    <a href="/unfollow/{{ user.id }}/" class='btn waves-effect waves-light'>Unfollow</a>
+    <h6>Following {{user.get_following_num}} users: 
+      {% for name in user.following.all %}
+        <a  href='/profile/{{name.id}}'>{{name}}, </a>
+      {% endfor %}
+    </h6>
+    <h8>Date Joined:{{user.date_joined}}</h8>
+    <p class="card-content">{{user.bio}}</p>
+    Tags You Follow: {%for tag in user.tags.all%}
+    <a  href='/tag/{{tag.slug}}'>#{{tag}}, </a>
+    {% endfor %}
+  </div>
+  <br />
+
+  <h3>Your Pyxz's</h3>
+    <div>{% include 'card_partial.html' with obj=img_set form=form %}</div>
+  </div>
+{% endif %}  
+
   {% endblock %}
