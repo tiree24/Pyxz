@@ -34,8 +34,20 @@ class HomePage(View):
             return numofdays.days
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
-        random_tags = [random.choice(tags) for i in range(5)]
-        five_random = [random.choice(stories) for i in range(5)]
+        """ How to select a set of random uniqie tags<<must have the tags variable from above """
+        random_tags = []
+        while len(random_tags) < 5:
+            new_choice = random.choice(tags)
+            if new_choice not in random_tags:
+                random_tags.append(new_choice)
+        # random_tags = [random.choice(tags) for i in range(5) if random.choice(tags) not in random_tags]
+        """ How to select a set of random uniqie stories<<must have the stories variable from above """
+        five_random = []
+        while len(five_random) < 5:
+            new_choice = random.choice(stories)
+            if new_choice not in five_random:
+                five_random.append(new_choice)
+        # five_random = [random.choice(stories) for i in range(5)]
         context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags}
         return render(request, self.html, context)
 
