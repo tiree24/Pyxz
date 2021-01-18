@@ -1,5 +1,28 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 
+<style>
+  .container{
+    margin-top: 20px;
+  }
+  .card-content{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  #profilecontain{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .row .col.m6 {
+    width: 100%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+</style>
+
 {% if user.get_profilepic_status == True %}
   <div class='container'>
     <div class="card center">
@@ -17,7 +40,25 @@
       {% endfor %}
     </h6>
     <h8>Date Joined:{{user.date_joined}}</h8>
-    <p class="card-content">{{user.bio}}</p>
+    <div id='profilecontain' >
+
+      <div id='bio' class="row">
+        <div class="col s12 m6">
+          <div class="card" style='background-color: #26a69a;'>
+            <div class="card-content white-text">
+              <span class="card-title">Bio</span>
+              <p class="card-content">{{user.bio}}</p>
+              
+            </div>
+            <div class="card-action">
+              <a href="#">Followers</a>
+              <a href="#">Tags You Follow</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
     Tags You Follow: {%for tag in user.tags.all%}
     <a  href='/tag/{{tag.slug}}'>#{{tag}}, </a>
     {% endfor %}
@@ -45,7 +86,25 @@
       {% endfor %}
     </h6>
     <h8>Date Joined:{{user.date_joined}}</h8>
-    <p class="card-content">{{user.bio}}</p>
+    <div id='profilecontain' >
+
+      <div id='bio' class="row">
+        <div class="col s12 m6">
+          <div class="card" style='background-color: #26a69a;'>
+            <div class="card-content white-text">
+              <span class="card-title">Bio</span>
+              <p class="card-content">{{user.bio}}</p>
+              
+            </div>
+            <div class="card-action">
+              <a href="#">Followers</a>
+              <a href="#">Tags You Follow</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
     Tags You Follow: {%for tag in user.tags.all%}
     <a  href='/tag/{{tag.slug}}'>#{{tag}}, </a>
     {% endfor %}
