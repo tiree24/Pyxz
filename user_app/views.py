@@ -267,16 +267,17 @@ class SearchView(ListView):
     template_name = 'search.html'
     #def get(self, request):
         #return render(request, 'search.html', {})
+
     def get(self, request): # new
         query = self.request.GET.get('q', None)
         if query == None:
             return render(self.request, 'search.html', {})
-        
+
 
         object_list = MyUser.objects.filter(
             Q(username__icontains=query) 
         )
-        
+
         tag_list = Image.tags.filter(
             Q(slug__icontains=query))
         image_title = Image.objects.filter(
