@@ -15,6 +15,7 @@ from comment_app.forms import CommentForm
 from comment_app.models import Comment
 import datetime
 import pytz
+import random
 
 
 class HomePage(View):
@@ -34,7 +35,8 @@ class HomePage(View):
             return numofdays.days
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
-        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':tags}
+        five_random_tags = [random.choice(tags) for i in range(5)]
+        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories, 'taglist':five_random_tags}
         return render(request, self.html, context)
 
     def post(self, request):
