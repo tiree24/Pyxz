@@ -28,3 +28,6 @@ class MyUser(AbstractUser):
     def get_class_name(self):
         return self.__class__.__name__
 
+    def get_profilepic_status(self):
+        return bool(self.profile_pyxz)
+

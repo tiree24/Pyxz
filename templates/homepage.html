@@ -1,7 +1,21 @@
 {% extends 'base.html' %} {% block content %}   {% load static %}
 
+<style>
+  .container {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+  }
+  #addS{
+    display:flex;
+    align-self: center;
+    margin: 10px;
+  }
+</style>
+
 
   <div class="container">
+    
     <div class="story" style="height:150px; display: flex">
       {% include 'story_partial.html' with obj=stories comments=comments form=form%}
     </div>
