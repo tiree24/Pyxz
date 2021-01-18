@@ -17,25 +17,51 @@
 
 <br>
 {% for user in displayuser %}
-<div id='user_container'>
+  {% if user.get_profilepic_status == True %}
+    <div id='user_container'>
 
-  <div class="collection" style='width: 500px;'>
-    <a  href="/profile/{{user.id}}/"  class="collection-item avatar">
-      <ul>
-        <li id='usr_box'>
-          <img
-            class="circle"
-            style="height: 66px; width: 66px"
-            src="{% static user.profile_pyxz %}"
-            alt="profile picture"
-          />
-          <span class="title">.</span>
-          <strong>
-            <p style='margin-left:20px;'>{{ user.username }}</p>
-          </strong>
-        </li>
-      </ul>
-    </a>
-  </div>
-</div>
+      <div class="collection" style='width: 500px;'>
+        <a  href="/profile/{{user.id}}/"  class="collection-item avatar">
+          <ul>
+            <li id='usr_box'>
+              <img
+                class="circle"
+                style="height: 66px; width: 66px"
+                src="{% static user.profile_pyxz %}"
+                alt="profile picture"
+              />
+              <span class="title">.</span>
+              <strong>
+                <p style='margin-left:20px;'>{{ user.username }}</p>
+              </strong>
+            </li>
+          </ul>
+        </a>
+      </div>
+    </div>
+    {% else %}
+    <div id='user_container'>
+
+      <div class="collection" style='width: 500px;'>
+        <a  href="/profile/{{user.id}}/"  class="collection-item avatar">
+          <ul>
+            <li id='usr_box'>
+              <img
+                class="circle"
+                style="height: 66px; width: 66px"
+                src="https://upload.wikimedia.org/wikipedia/en/1/1b/NPC_wojak_meme.png"
+                alt="profile picture"
+              />
+              <span class="title">.</span>
+              <strong>
+                <p style='margin-left:20px;'>{{ user.username }}</p>
+              </strong>
+            </li>
+          </ul>
+        </a>
+      </div>
+    </div>
+  {% endif %}  
+
+
 {% endfor %}{% endblock %}
