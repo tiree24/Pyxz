@@ -229,7 +229,7 @@ def funcView(request):
             u = MyUser.objects.get(id=request.user.id)
             # u['profile_pyxz'] = request.POST['profile_pyxz'][0]
             u.save()
-            return render(request, 'homepage.html', {'form': form})
+            return HttpResponseRedirect(f'/profile/{request.user.id}/')
     else:
         form_data = {'bio': request.user.bio, 'tags': request.user.tags.all()}
         form = UserEditForm(initial=form_data, instance=request.user)
