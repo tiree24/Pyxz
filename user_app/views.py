@@ -330,4 +330,13 @@ class UsersPageView(View):
         context = {'displayuser': displayuser}
         return render(request, html, context)
 
+
+class UserFollowers(View):
+
+    def get(self, request, user_id):
+        html = 'followers.html'
+        displayuser = MyUser.objects.all()
+        profileuser = MyUser.objects.get(id=user_id)
+        context = {'displayuser': displayuser, 'profileuser': profileuser}
+        return render(request, html, context)
     

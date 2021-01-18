@@ -13,7 +13,10 @@
     }
   </style>
 </head>
-
+<!-- <h6>Following {{user.get_following_num}} users: 
+  {% for name in user.following.all %}
+    <a  href='/profile/{{name.id}}'>{{name}}, </a>
+  {% endfor %} -->
 
 <br>
 {% for user in displayuser %}
