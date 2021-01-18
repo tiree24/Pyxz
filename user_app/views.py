@@ -1,4 +1,5 @@
 import datetime
+import random
 
 import pytz
 from comment_app.forms import CommentForm
