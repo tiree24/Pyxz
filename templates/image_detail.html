@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {% load static %}
 {% block content %}
+<div class='container'>
 <h2>Title: {{i.title}}</h3>
 <h4> by: <a href="/profile/{{i.myuser.id}}/">{{i.myuser.username}}</a> at: {{i.post_time}}</h4>
 
@@ -42,5 +43,5 @@
         {% endif %} {% endfor %}
     </div>
   </div>
-
+</div>
 {% endblock %}

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView,  UnFollowView, FollowUserView, FollowTagsView, TopView, EditFormView, funcView, SearchView, UsersPageView, UserFollowers
+from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView,  UnFollowView, FollowUserView, FollowTagsView, TopView, EditFormView, SearchView, UsersPageView, UserFollowers
 
 from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView, StoryUpload
 from auth_app.views import LoginFormView, LogoutView
@@ -35,12 +35,12 @@ urlpatterns = [
     path("followingtags/", FollowTagsView.as_view()),
     path('whoifollow/<int:user_id>/', UserFollowers.as_view()),
     path('profile/<int:user_id>/', Profile.as_view(), name = 'Profile'),
-    path('profile/edit', funcView),
+    path('profile/edit', EditFormView),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
     path('img/<int:img_id>/', Image_view.as_view()),
     path('tag/<slug:tag_title>/', TagCategory.as_view(), name='TagSub'),
-    path("login/", LoginFormView.as_view(), name="login"),
+    path("login/", LoginFormView.as_view(), name="Login"),
     path("logout/", LogoutView.as_view()),
     path("upload/", ImageUpload.as_view()),
     path("uploadstory/", StoryUpload.as_view()),

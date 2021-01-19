@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views import View
 from django.views.generic import ListView
@@ -13,11 +13,16 @@ from django.db.models import Q
 from user_app.forms import SignUpForm, UserEditForm
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
-import datetime
-import pytz
-import random
+import datetime, pytz, random
 
-
+def maths(current_time, post_time):
+            numofdays = current_time - post_time
+            return numofdays.days
+def randomizer(random_list, choices, length):
+            while len(random_list) < min(len(choices), length):
+                choice = random.choice(choices)
+                if choice not in random_list:
+                    random_list.append(choice)
 class HomePage(View):
 
     html = 'homepage.html'
@@ -29,25 +34,12 @@ class HomePage(View):
         img_set = Image.objects.filter(is_story=False).all()
         # stories = Image.objects.filter(is_story=True).all()
         current_time = datetime.datetime.now(pytz.utc)
-
-        def maths(current_time, post_time):
-            numofdays = current_time - post_time
-            return numofdays.days
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
-        """ How to select a set of random uniqie tags<<must have the tags variable from above """
         random_tags = []
-        while len(random_tags) < min(len(tags), 10):
-            new_choice = random.choice(tags)
-            if new_choice not in random_tags:
-                random_tags.append(new_choice)
-        """ How to select a set of random uniqie stories<<must have the stories variable from above """
+        randomizer(random_tags,tags,10)
         five_random = []
-        while len(five_random) < min(len(stories), 5):
-            new_choice = random.choice(stories)
-            if new_choice not in five_random:
-                five_random.append(new_choice)
-        # five_random = [random.choice(stories) for i in range(5)]
+        randomizer(five_random,stories,5)
         context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags}
         return render(request, self.html, context)
 
@@ -70,21 +62,13 @@ class OrderedView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().order_by(order_by)[::-1]
         current_time = datetime.datetime.now(pytz.utc)
-        def maths(current_time, post_time):
-            numofdays = current_time - post_time
-            return numofdays.days
+        
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        while len(random_tags) < min(len(tags), 10):
-            new_choice = random.choice(tags)
-            if new_choice not in random_tags:
-                random_tags.append(new_choice)
+        randomizer(random_tags,tags,10)
         five_random = []
-        while len(five_random) < min(len(stories), 5):
-            new_choice = random.choice(stories)
-            if new_choice not in five_random:
-                five_random.append(new_choice)
+        randomizer(five_random,stories,5)
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags   })
 
     def post(self, request):
@@ -105,9 +89,7 @@ class TopView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().annotate(like_count=Count('likes')).order_by('-like_count')
         current_time = datetime.datetime.now(pytz.utc)
-        def maths(current_time, post_time):
-            numofdays = current_time - post_time
-            return numofdays.days
+        
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
 
@@ -121,7 +103,10 @@ class TopView(View):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class FollowUserView(View):
+class FollowUserView(LoginRequiredMixin, View):
+
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     html = 'homepage.html'
     form = CommentForm()
 
@@ -130,21 +115,13 @@ class FollowUserView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().filter(myuser_id__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
-        def maths(current_time, post_time):
-            numofdays = current_time - post_time
-            return numofdays.days
+        
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        while len(random_tags) < min(len(tags), 10):
-            new_choice = random.choice(tags)
-            if new_choice not in random_tags:
-                random_tags.append(new_choice)
+        randomizer(random_tags,tags,10)
         five_random = []
-        while len(five_random) < min(len(stories), 5):
-            new_choice = random.choice(stories)
-            if new_choice not in five_random:
-                five_random.append(new_choice)
+        randomizer(five_random,stories,5)
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags})
 
     def post(self, request):
@@ -156,7 +133,9 @@ class FollowUserView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-class FollowTagsView(View):
+class FollowTagsView(LoginRequiredMixin,View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     html = 'homepage.html'
     form = CommentForm()
 
@@ -165,21 +144,13 @@ class FollowTagsView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().filter(tags__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
-        def maths(current_time, post_time):
-            numofdays = current_time - post_time
-            return numofdays.days
+        
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        while len(random_tags) < min(len(tags), 10):
-            new_choice = random.choice(tags)
-            if new_choice not in random_tags:
-                random_tags.append(new_choice)
+        randomizer(random_tags,tags,10)
         five_random = []
-        while len(five_random) < min(len(stories), 5):
-            new_choice = random.choice(stories)
-            if new_choice not in five_random:
-                five_random.append(new_choice)
+        randomizer(five_random,stories,5)
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags})
 
     def post(self, request):
@@ -191,6 +162,7 @@ class FollowTagsView(View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 """ Follow this example to add photos/comments to any view """
+
 class Profile(View):
 
     html = 'profile.html'
@@ -236,41 +208,21 @@ class SignUp(View):
                 first_name=data['first_name'],
                 last_name=data['last_name'],
                 email=data['email'],
-                password=data['password']
+                password=data['password'],
             )
-            return HttpResponseRedirect(reverse('All'))
+            return HttpResponseRedirect(reverse('Login'))
 
-class EditFormView(View):
-    def get(self, request):
-        form_data = {'bio': request.user.bio, 'tags': request.user.tags.all()}
-        form = UserEditForm(initial=form_data, instance=request.user)
-        html = 'generic_form.html'
-        context = {'form': form}
-        return render(request, html, context)
-
-    def post(self, request):
-        form = UserEditForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            data = form.cleaned_data
-            custom_form = form.save(commit=False)
-            custom_form.save()
-            form.save_m2m()
-            u = MyUser.objects.get(id=request.user.id)
-            u.profile_pyxz = data['profile_pyxz']
-            u.save()
-            breakpoint()
-            return render(request, 'homepage.html', {'form': form})
-
-def funcView(request):
+@login_required
+def EditFormView(request):
     if request.POST:
-        form = UserEditForm(request.POST, request.FILES, instance=request.user)
+        form = UserEditForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
             custom_form = form.save(commit=False)
             custom_form.save()
             form.save_m2m()
             u = MyUser.objects.get(id=request.user.id)
-            # u['profile_pyxz'] = request.POST['profile_pyxz'][0]
+            # u['profile_pyxz'  ] = request.POST['profile_pyxz'][0]
             u.save()
             return HttpResponseRedirect(f'/profile/{request.user.id}/')
     else:
@@ -280,13 +232,13 @@ def funcView(request):
         context = {'form': form}
         return render(request, html, context)
 
-
+@login_required
 def FollowView(request, user_id):
     user = MyUser.objects.get(id=user_id)
     request.user.following.add(user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-
+@login_required
 def UnFollowView(request, user_id):
     user = MyUser.objects.get(id=user_id)
     request.user.following.remove(user)
@@ -296,8 +248,7 @@ def UnFollowView(request, user_id):
 class SearchView(ListView):
     model = MyUser, Image
     template_name = 'search.html'
-    #def get(self, request):
-        #return render(request, 'search.html', {})
+
     def get(self, request): # new
         query = self.request.GET.get('q', None)
         if query == None:
