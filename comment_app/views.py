@@ -17,6 +17,7 @@ def CommentLikeUpView(request, comment_id):
     target.save()
     return redirect(request.META.get('HTTP_REFERER'))
 
+
 @login_required
 def CommentLikeDownView(request, comment_id):
     target = Comment.objects.get(id=comment_id)

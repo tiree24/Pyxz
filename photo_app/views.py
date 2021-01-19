@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from photo_app.models import Image, TaggableManager
 from photo_app.forms import ImageForm
 from user_app.models import MyUser
@@ -67,7 +67,7 @@ class TagCategory(View):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class ImageUpload(LoginRequiredMixin,View):
+class ImageUpload(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     html = 'imageupload.html'
@@ -88,7 +88,7 @@ class ImageUpload(LoginRequiredMixin,View):
             return HttpResponseRedirect(reverse('All'))
 
 
-class StoryUpload(LoginRequiredMixin,View):
+class StoryUpload(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     html = 'storyupload.html'
