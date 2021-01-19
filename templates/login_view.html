@@ -32,21 +32,34 @@
   />
 </head>
 
-<div id="container">
-  <div class="row">
-    <div class="card blue-grey darken-1">
-      <div class="card-content white-text">
-        <span class="card-title"
-          >Welcome to Pyxz <i class="material-icons">all_inclusive</i></span
-        >
-        <p>
-          Hello memes and gifs! Beyond this page you will be tested and
-          challanged with displaying some of the worlds most inspriing, creative
-          and inclusive within the Pyxz social library. Consider this a place
-          where unique minds come to share their final creations and you being
-          able to see how they got there.
-        </p>
-      </div>
+    <div id='container'>
+        
+            <div class="row">
+               
+                  <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title">Welcome to Pyxz <i class="material-icons">all_inclusive</i></span>
+                      <p>Hello memes and gifs! Beyond this page you will be invited to display your
+                          pyxz to insprire, share, and connect all within the Pyxz social library. Consider this a place where unique
+                          minds come to share their Pyxz and Stories.
+                      </p>
+                    </div>
+                </div>
+             
+        </div>
+        <form method="POST" action="" class='dganjoform'>
+            <nav class="nav-extended blue-grey">
+                <div class="nav-wrapper">
+                    <a href="/" class="brand-logo center ">Pyxz 📷</a>
+                </div>
+                </nav>
+
+                    {% csrf_token %}
+                    {{ form.as_p }}
+            
+                    <button type="submit" value="Post" class="btn btn-dark">Submit!</button>
+    
+        </form>
     </div>
   </div>
   <form method="POST" action="" class="dganjoform">

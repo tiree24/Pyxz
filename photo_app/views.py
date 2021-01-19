@@ -1,15 +1,16 @@
+from django.shortcuts import render, redirect
+from photo_app.models import Image, TaggableManager
+from photo_app.forms import ImageForm
+from user_app.models import MyUser
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
-from django.template.defaultfilters import slugify
-from django.urls import reverse
 from django.views import View
 from taggit.models import Tag
-from user_app.models import MyUser
+from django.template.defaultfilters import slugify
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-from photo_app.forms import ImageForm
-from photo_app.models import Image, TaggableManager
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -42,7 +43,7 @@ class AllTags(View):
 
 
 class TagCategory(View):
-    html = 'tagcategory.html'
+    html = 'tag_detail.html'
 
     form = CommentForm()
 
@@ -66,7 +67,9 @@ class TagCategory(View):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class ImageUpload(View):
+class ImageUpload(LoginRequiredMixin,View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     html = 'imageupload.html'
 
     def get(self, request):
@@ -85,7 +88,9 @@ class ImageUpload(View):
             return HttpResponseRedirect(reverse('All'))
 
 
-class StoryUpload(View):
+class StoryUpload(LoginRequiredMixin,View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     html = 'storyupload.html'
 
     def get(self, request):
@@ -103,18 +108,9 @@ class StoryUpload(View):
             newimage.save()
             form.save_m2m()
             return HttpResponseRedirect(reverse('All'))
-    # def post(self, request):
-    #     form = ImageForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         data = form.cleaned_data
-    #         image = Image.objects.create(slug= data['title'],
-    #         photo= data['photo'], description= data['description'],
-    #         tags= data['tags'], is_story =True, myuser = request.user)
-    #         return HttpResponseRedirect(reverse('All'))
-    #     else:
-    #         return render(request, self.html, {'form': form})
 
 
+@login_required
 def LikeUpView(request, img_id):
     target = Image.objects.get(id=img_id)
     auth_user = MyUser.objects.get(id=request.user.id)
@@ -124,6 +120,7 @@ def LikeUpView(request, img_id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required
 def LikeDownView(request, img_id):
     target = Image.objects.get(id=img_id)
     auth_user = MyUser.objects.get(id=request.user.id)

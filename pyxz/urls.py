@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from auth_app.views import LoginFormView, LogoutView
 from comment_app.views import CommentLikeDownView, CommentLikeUpView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -21,7 +20,7 @@ from django.contrib import admin
 from django.urls import path
 from photo_app.views import (AllTags, Image_view, ImageUpload, LikeDownView,
                              LikeUpView, StoryUpload, TagCategory)
-from user_app.views import (FollowTagsView, FollowUserView,
+from user_app.views import (EditFormView, FollowTagsView, FollowUserView,
                             FollowView, HomePage, OrderedView, Profile,
                             SearchView, SignUp, TopView, UnFollowView,
                             UserFollowers, UsersPageView, funcView)
@@ -34,13 +33,13 @@ urlpatterns = [
     path("following/", FollowUserView.as_view()),
     path("followingtags/", FollowTagsView.as_view()),
     path('whoifollow/<int:user_id>/', UserFollowers.as_view()),
-    path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
-    path('profile/edit', funcView),
+    path('profile/<int:user_id>/', Profile.as_view(), name = 'Profile'),
+    path('profile/edit', EditFormView),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
     path('img/<int:img_id>/', Image_view.as_view()),
     path('tag/<slug:tag_title>/', TagCategory.as_view(), name='TagSub'),
-    path("login/", LoginFormView.as_view(), name="login"),
+    path("login/", LoginFormView.as_view(), name="Login"),
     path("logout/", LogoutView.as_view()),
     path("upload/", ImageUpload.as_view()),
     path("uploadstory/", StoryUpload.as_view()),
