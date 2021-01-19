@@ -1,27 +1,33 @@
-from django.shortcuts import render, HttpResponseRedirect, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
+import datetime
+import random
 
 import pytz
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q
 from django.shortcuts import HttpResponseRedirect, render, reverse
 from django.views import View
 from django.views.generic import ListView
 from photo_app.models import Image
+from user_app.models import MyUser
+
 from user_app.forms import SignUpForm, UserEditForm
-from comment_app.forms import CommentForm
-from comment_app.models import Comment
-import datetime, pytz, random
+
 
 def maths(current_time, post_time):
-            numofdays = current_time - post_time
-            return numofdays.days
+    numofdays = current_time - post_time
+    return numofdays.days
+
+
 def randomizer(random_list, choices, length):
-            while len(random_list) < min(len(choices), length):
-                choice = random.choice(choices)
-                if choice not in random_list:
-                    random_list.append(choice)
+    while len(random_list) < min(len(choices), length):
+        choice = random.choice(choices)
+        if choice not in random_list:
+            random_list.append(choice)
+
+
 class HomePage(View):
 
     html = 'homepage.html'
@@ -133,6 +139,7 @@ class FollowUserView(LoginRequiredMixin, View):
             model.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 class FollowTagsView(LoginRequiredMixin,View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
@@ -144,7 +151,7 @@ class FollowTagsView(LoginRequiredMixin,View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().filter(tags__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
-        
+
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
@@ -164,6 +171,7 @@ class FollowTagsView(LoginRequiredMixin,View):
 
 
 """ Follow this example to add photos/comments to any view """
+
 
 class Profile(View):
 
@@ -213,6 +221,7 @@ class SignUp(View):
             )
             return HttpResponseRedirect(reverse('Login'))
 
+
 @login_required
 def EditFormView(request):
     if request.POST:
@@ -233,11 +242,13 @@ def EditFormView(request):
         context = {'form': form}
         return render(request, html, context)
 
+
 @login_required
 def FollowView(request, user_id):
     user = MyUser.objects.get(id=user_id)
     request.user.following.add(user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
 @login_required
 def UnFollowView(request, user_id):
