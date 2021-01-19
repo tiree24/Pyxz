@@ -22,7 +22,7 @@ class HomePage(View):
         comments = Comment.objects.all()
         """ add this to views with all pictures except for stories """
         img_set = Image.objects.filter(is_story=False).all()
-        stories = Image.objects.filter(is_story=True).all()
+        # stories = Image.objects.filter(is_story=True).all()
         current_time = datetime.datetime.now(pytz.utc)
 
         def maths(current_time, post_time):
@@ -38,7 +38,7 @@ class HomePage(View):
                 random_tags.append(new_choice)
         """ How to select a set of random uniqie stories<<must have the stories variable from above """
         five_random = []
-        while len(five_random) < 5:
+        while len(five_random) < min(len(stories), 5):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)

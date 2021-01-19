@@ -88,11 +88,11 @@ class StoryUpload(View):
 
     def get(self, request):
         form = ImageForm()
-        return render(request, 'storyupload.html', {'form': form})
+        return render(request, self.html, {'form': form})
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
-        image = Image.objects.all()
+        # image = Image.objects.all()
         if form.is_valid():
             newimage = form.save(commit=False)
             newimage.myuser = request.user
