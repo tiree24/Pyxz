@@ -9,7 +9,6 @@ from django.shortcuts import HttpResponseRedirect, render, reverse
 from django.views import View
 from django.views.generic import ListView
 from photo_app.models import Image
-
 from user_app.forms import SignUpForm, UserEditForm
 from user_app.models import MyUser
 
@@ -23,7 +22,7 @@ class HomePage(View):
         comments = Comment.objects.all()
         """ add this to views with all pictures except for stories """
         img_set = Image.objects.filter(is_story=False).all()
-        # stories = Image.objects.filter(is_story=True).all()
+        stories = Image.objects.filter(is_story=True).all()
         current_time = datetime.datetime.now(pytz.utc)
 
         def maths(current_time, post_time):
@@ -31,17 +30,12 @@ class HomePage(View):
             return numofdays.days
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
-<<<<<<< HEAD
-        five_random_tags = [random.choice(tags) for i in range(5)]
-        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': five_random_tags}
-=======
         """ How to select a set of random uniqie tags<<must have the tags variable from above """
         random_tags = []
         while len(random_tags) < 10:
             new_choice = random.choice(tags)
             if new_choice not in random_tags:
                 random_tags.append(new_choice)
-        # random_tags = [random.choice(tags) for i in range(5) if random.choice(tags) not in random_tags]
         """ How to select a set of random uniqie stories<<must have the stories variable from above """
         five_random = []
         while len(five_random) < 5:
@@ -49,8 +43,7 @@ class HomePage(View):
             if new_choice not in five_random:
                 five_random.append(new_choice)
         # five_random = [random.choice(stories) for i in range(5)]
-        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags}
->>>>>>> main
+        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags}
         return render(request, self.html, context)
 
     def post(self, request):
@@ -78,9 +71,6 @@ class OrderedView(View):
             return numofdays.days
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
-<<<<<<< HEAD
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags})
-=======
         random_tags = []
         while len(random_tags) < 10:
             new_choice = random.choice(tags)
@@ -91,8 +81,7 @@ class OrderedView(View):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags   })
->>>>>>> main
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist':random_tags   })
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -145,9 +134,6 @@ class FollowUserView(View):
             return numofdays.days
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
-<<<<<<< HEAD
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags})
-=======
         random_tags = []
         while len(random_tags) < 10:
             new_choice = random.choice(tags)
@@ -158,8 +144,7 @@ class FollowUserView(View):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags})
->>>>>>> main
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist':random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -186,9 +171,6 @@ class FollowTagsView(View):
             return numofdays.days
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
-<<<<<<< HEAD
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories, 'taglist': tags})
-=======
         random_tags = []
         while len(random_tags) < 10:
             new_choice = random.choice(tags)
@@ -199,8 +181,7 @@ class FollowTagsView(View):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags})
->>>>>>> main
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist':random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -346,8 +327,6 @@ class UsersPageView(View):
         displayuser = MyUser.objects.all()
         context = {'displayuser': displayuser}
         return render(request, html, context)
-<<<<<<< HEAD
-=======
 
 
 class UserFollowers(View):
@@ -358,4 +337,3 @@ class UserFollowers(View):
         profileuser = MyUser.objects.get(id=user_id)
         context = {'displayuser': displayuser, 'profileuser': profileuser}
         return render(request, html, context)
->>>>>>> main
