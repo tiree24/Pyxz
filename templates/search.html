@@ -15,6 +15,11 @@
   </style>
 </head>
 {% load static %}
+{% if user.get_profilepic_status == True %}
+
+{% else %}
+
+{% endif %} 
 
 <div class="container">
   <h1>Search Results</h1>
@@ -22,16 +27,36 @@
   <ul>
     <h3>User Names</h3>
     <div class="collection">
-      {% for obj in new_list %} {% if obj.get_class_name == 'MyUser' %}
-      <a href="/profile/{{obj.id}}/" class="collection-item avatar">
-        <li id="usr_box">
-          <img src="{% static obj.profile_pyxz %}" alt="" class="circle" />
-          <span class="title">
-            <strong> User: {{ obj.username }} </strong>
-          </span>
-        </li>
-      </a>
-      {% endif %} {% endfor %}
+
+      {% for obj in new_list %} 
+        {% if obj.get_class_name == 'MyUser' %}
+            {% if obj.get_profilepic_status == True %}
+              <a href="/profile/{{obj.id}}/" class="collection-item avatar">
+                <li id='usr_box'>
+                  <img src='{% static obj.profile_pyxz %}' alt="" class="circle">
+                  <span class="title"> 
+                    <strong>
+
+                      User: {{ obj.username }}
+                    </strong>
+                  </span>
+                </li>
+              </a>
+            {% else %}
+              <a href="/profile/{{obj.id}}/" class="collection-item avatar">
+                <li id='usr_box'>
+                  <img src="https://upload.wikimedia.org/wikipedia/en/1/1b/NPC_wojak_meme.png" alt="" class="circle">
+                  <span class="title"> 
+                    <strong>
+
+                      User: {{ obj.username }}
+                    </strong>
+                  </span>
+                </li>
+              </a>
+            {% endif %} 
+        {% endif %}
+      {% endfor %}
     </div>
 
     <h3>Image Titles</h3>

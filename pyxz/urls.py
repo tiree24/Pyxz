@@ -24,7 +24,7 @@ from photo_app.views import (AllTags, Image_view, ImageUpload, LikeDownView,
 from user_app.views import (EditFormView, FollowTagsView, FollowUserView,
                             FollowView, HomePage, OrderedView, Profile,
                             SearchView, SignUp, TopView, UnFollowView,
-                            UsersPageView, funcView)
+                            UserFollowers, UsersPageView, funcView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +33,8 @@ urlpatterns = [
     path('top/', TopView.as_view(), name='Top'),
     path("following/", FollowUserView.as_view()),
     path("followingtags/", FollowTagsView.as_view()),
-    path('profile/<int:user_id>/', Profile.as_view(), name='Profile'),
+    path('whoifollow/<int:user_id>/', UserFollowers.as_view()),
+    path('profile/<int:user_id>/', Profile.as_view(), name = 'Profile'),
     path('profile/edit', funcView),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),

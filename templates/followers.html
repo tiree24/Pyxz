@@ -1,25 +1,25 @@
-{% extends 'base.html' %}{% block content %}{% load static %}
+{% extends 'base.html' %}{% block content %}{% load static %} 
 
 <head>
   <style>
-    #user_container {
-      display: flex;
-      justify-content: center;
+    #user_container{
+      display:flex;
+      justify-content:center;
     }
-    #usr_box {
-      display: flex;
+    #usr_box{
+      display:flex;
       padding-top: 7px;
       align-items: center;
     }
   </style>
 </head>
-<!-- <h6>Following {{user.get_following_num}} users: 
-  {% for name in user.following.all %}
-    <a  href='/profile/{{name.id}}'>{{name}}, </a>
-  {% endfor %} -->
 
+<!-- <h6>Following {{user.get_following_num}} users: 
+    {% for name in user.following.all %}
+      <a  href='/profile/{{name.id}}'>{{name}}, </a>
+    {% endfor %} -->
 <br>
-{% for user in displayuser %}
+{% for user in profileuser.following.all %}
   {% if user.get_profilepic_status == True %}
     <div id='user_container'>
 
