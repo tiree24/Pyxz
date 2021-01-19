@@ -1,7 +1,21 @@
 {% extends 'base.html' %} {% block content %}   {% load static %}
 
+<style>
+  .container {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+  }
+  #addS{
+    display:flex;
+    align-self: center;
+    margin: 10px;
+  }
+</style>
+
 
   <div class="container">
+    
     <div class="story" style="height:150px; display: flex">
       {% include 'story_partial.html' with obj=stories comments=comments form=form%}
     </div>
@@ -20,7 +34,7 @@
           <li class="tab"><a href="/order/post_time/">new</a></li>
           <li class="tab"><a href="/order/likes/">top</a></li>
           <li class="tab"><a href="/following/">followed users</a></li>
-          <li class="tab"><a href="/followingtags/">followed tags*</a></li>
+          <li class="tab"><a href="/followingtags/">followed tags</a></li>
           {% endif%}
         </ul>
   </nav>

@@ -1,10 +1,51 @@
-{% extends 'base.html' %} {% block content %} {% load static %}
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %} {{ form.as_p }}
-    <button class="waves-effect waves-light btn" type="submit">Upload</button>
-</form>
+{% extends 'base.html' %} {% block content %} {% load static %} 
 
-{% if img_obj %}
-<h3>Succesfully uploaded : {{img_obj.title}}</h3>
-<img src="{{ img_obj.image.url}}" alt="connect" style="max-height: 300px" />
-{% endif %} {% endblock %}
+
+<style>
+  #container{
+    display:flex;
+    margin-top: 25px;
+    width: 60%;
+    /* margin-left: 15%;
+    margin-right: 30%; */
+    
+  }
+  span.card-title{
+    margin-bottom: 30px;
+  }
+
+  .row .col.s12 {
+    margin-right:auto;
+  }
+</style>
+
+
+<div id='container' class="row">
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo3kmW-mHBzqPziz6hNYnfJ7ONC9d3wplmMw&usqp=CAU">
+        <span class="card-title " style='color:black;font-weight: bold;'>Upload Image</span>
+      </div>
+      <div class="card-content">
+       
+        <form method="post" action="" enctype="multipart/form-data">
+          {% csrf_token %} {{ form.as_p }}
+          <a>
+            <button class="btn-floating halfway-fab waves-effect waves-light red" type="submit">
+              <i class="material-icons">add</i>
+            </button>
+          </a>
+        </form>
+        {% if img_obj %}
+        <h3>Succesfully uploaded : {{img_obj.title}}</h3>
+        <img src="{{ img_obj.image.url}}" alt="connect" style="max-height: 300px" />
+        {% endif %} 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
