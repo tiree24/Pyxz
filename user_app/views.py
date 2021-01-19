@@ -95,7 +95,6 @@ class TopView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().annotate(like_count=Count('likes')).order_by('-like_count')
         current_time = datetime.datetime.now(pytz.utc)
-        
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
 
@@ -121,7 +120,7 @@ class FollowUserView(LoginRequiredMixin, View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().filter(myuser_id__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
-        
+
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
@@ -140,7 +139,7 @@ class FollowUserView(LoginRequiredMixin, View):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class FollowTagsView(LoginRequiredMixin,View):
+class FollowTagsView(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     html = 'homepage.html'
@@ -152,13 +151,13 @@ class FollowTagsView(LoginRequiredMixin,View):
         img_set = Image.objects.filter(is_story=False).all().filter(tags__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
 
-        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        randomizer(random_tags,tags,10)
+        randomizer(random_tags, tags, 10)
         five_random = []
-        randomizer(five_random,stories,5)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags})
+        randomizer(five_random, stories, 5)
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist':random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -184,7 +183,7 @@ class Profile(View):
         img_set = Image.objects.filter(is_story=False).all().filter(myuser=user)
         """ Need this or a way to capture your photos .all() or .get()"""
         comments = Comment.objects.all()
-        return render(request, self.html, {'user': user,  'img_set': img_set, 'comments': comments, 'form': self.form})
+        return render(request, self.html, {'user': user,  'img_set': img_set, 'comments': comments, 'form': self.form })
 
     """ Copy the post() function fully """
     def post(self, request, user_id):
@@ -261,7 +260,7 @@ class SearchView(ListView):
     model = MyUser, Image
     template_name = 'search.html'
 
-    def get(self, request): # new
+    def get(self, request):
         query = self.request.GET.get('q', None)
         if query is None:
             return render(self.request, 'search.html', {})
