@@ -81,7 +81,7 @@ class OrderedView(View):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist':random_tags   })
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -144,7 +144,7 @@ class FollowUserView(View):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist':random_tags})
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -181,7 +181,7 @@ class FollowTagsView(View):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist':random_tags})
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)

@@ -1,13 +1,15 @@
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render, reverse
+from django.shortcuts import redirect, render
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 from django.views import View
+from taggit.models import Tag
 from user_app.models import MyUser
 
 from photo_app.forms import ImageForm
-from photo_app.models import Image
+from photo_app.models import Image, TaggableManager
 
 # Create your views here.
 
@@ -55,7 +57,7 @@ class TagCategory(View):
 
     def post(self, request, tag_title):
         form = CommentForm(request.POST)
-
+        tag = Image.tags.get(slug=tag_title)
         if form.is_valid():
             data = form.cleaned_data
             img = Image.objects.get(photo=request.POST.get("title", ""))
@@ -69,7 +71,7 @@ class ImageUpload(View):
 
     def get(self, request):
         form = ImageForm()
-        return render(request, self.html, {'form': form})
+        return render(request, 'imageupload.html', {'form': form})
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
@@ -88,11 +90,11 @@ class StoryUpload(View):
 
     def get(self, request):
         form = ImageForm()
-        return render(request, self.html, {'form': form})
+        return render(request, 'storyupload.html', {'form': form})
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
-        # image = Image.objects.all()
+        image = Image.objects.all()
         if form.is_valid():
             newimage = form.save(commit=False)
             newimage.myuser = request.user
@@ -101,6 +103,16 @@ class StoryUpload(View):
             newimage.save()
             form.save_m2m()
             return HttpResponseRedirect(reverse('All'))
+    # def post(self, request):
+    #     form = ImageForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         data = form.cleaned_data
+    #         image = Image.objects.create(slug= data['title'],
+    #         photo= data['photo'], description= data['description'],
+    #         tags= data['tags'], is_story =True, myuser = request.user)
+    #         return HttpResponseRedirect(reverse('All'))
+    #     else:
+    #         return render(request, self.html, {'form': form})
 
 
 def LikeUpView(request, img_id):
