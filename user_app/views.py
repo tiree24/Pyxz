@@ -32,7 +32,7 @@ class HomePage(View):
         tags = Image.tags.all()
         """ How to select a set of random uniqie tags<<must have the tags variable from above """
         random_tags = []
-        while len(random_tags) < 10:
+        while len(random_tags) < min(len(tags), 10):
             new_choice = random.choice(tags)
             if new_choice not in random_tags:
                 random_tags.append(new_choice)
@@ -72,12 +72,12 @@ class OrderedView(View):
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        while len(random_tags) < 10:
+        while len(random_tags) < min(len(tags), 10):
             new_choice = random.choice(tags)
             if new_choice not in random_tags:
                 random_tags.append(new_choice)
         five_random = []
-        while len(five_random) < 5:
+        while len(five_random) < min(len(stories), 5):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
@@ -135,12 +135,12 @@ class FollowUserView(View):
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        while len(random_tags) < 10:
+        while len(random_tags) < min(len(tags), 10):
             new_choice = random.choice(tags)
             if new_choice not in random_tags:
                 random_tags.append(new_choice)
         five_random = []
-        while len(five_random) < 5:
+        while len(five_random) < min(len(stories), 5):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
@@ -172,12 +172,12 @@ class FollowTagsView(View):
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        while len(random_tags) < 10:
+        while len(random_tags) < min(len(tags), 10):
             new_choice = random.choice(tags)
             if new_choice not in random_tags:
                 random_tags.append(new_choice)
         five_random = []
-        while len(five_random) < 5:
+        while len(five_random) < min(len(stories), 5):
             new_choice = random.choice(stories)
             if new_choice not in five_random:
                 five_random.append(new_choice)
