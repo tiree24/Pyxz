@@ -34,10 +34,7 @@
     <a href="/profile/edit" class='btn waves-effect waves-light'>edit</a></h1>
     <a href="/follow/{{ user.id }}/" class='btn waves-effect waves-light'>Follow</a>
     <a href="/unfollow/{{ user.id }}/" class='btn waves-effect waves-light'>Unfollow</a>
-    <h6>Following {{user.get_following_num}} users: 
-      {% for name in user.following.all %}
-        <a  href='/profile/{{name.id}}'>{{name}}, </a>
-      {% endfor %}
+    <h6>Following {{user.get_following_num}}       
     </h6>
     <h8>Date Joined:{{user.date_joined}}</h8>
     <div id='profilecontain' >
@@ -80,10 +77,7 @@
     <a href="/profile/edit" class='btn waves-effect waves-light'>edit</a></h1>
     <a href="/follow/{{ user.id }}/" class='btn waves-effect waves-light'>Follow</a>
     <a href="/unfollow/{{ user.id }}/" class='btn waves-effect waves-light'>Unfollow</a>
-    <h6>Following {{user.get_following_num}} users: 
-      {% for name in user.following.all %}
-        <a  href='/profile/{{name.id}}'>{{name}}, </a>
-      {% endfor %}
+    <h6>Following {{user.get_following_num}} 
     </h6>
     <h8>Date Joined:{{user.date_joined}}</h8>
     <div id='profilecontain' >
