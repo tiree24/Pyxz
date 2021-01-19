@@ -1,9 +1,8 @@
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, reverse
 from django.template.defaultfilters import slugify
-from django.urls import reverse
 from django.views import View
 from user_app.models import MyUser
 
@@ -70,11 +69,11 @@ class ImageUpload(View):
 
     def get(self, request):
         form = ImageForm()
-        return render(request, 'imageupload.html', {'form': form})
+        return render(request, self.html, {'form': form})
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
-
+        image = Image.objects.all()
         if form.is_valid():
             newimage = form.save(commit=False)
             newimage.myuser = request.user
@@ -93,7 +92,7 @@ class StoryUpload(View):
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
-        # image = Image.objects.all()
+        image = Image.objects.all()
         if form.is_valid():
             newimage = form.save(commit=False)
             newimage.myuser = request.user

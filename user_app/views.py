@@ -4,13 +4,11 @@ import random
 import pytz
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
-from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.shortcuts import HttpResponseRedirect, render, reverse
-from django.template.defaultfilters import slugify
 from django.views import View
 from django.views.generic import ListView
-from photo_app.models import Image, TaggableManager
+from photo_app.models import Image
 
 from user_app.forms import SignUpForm, UserEditForm
 from user_app.models import MyUser
