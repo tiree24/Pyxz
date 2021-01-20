@@ -6,7 +6,7 @@
 - pip install django-taggit
 - python -m pipenv install Pillow
 
-**UX and WebApp Preview**
+**UX and WebApp Preview:**
 
 
 **Unique Functions:**
@@ -31,7 +31,7 @@ def randomizer(random_list, choices, length):
             random_list.append(choice)
 ```
 
-**Preview of HomePage() Class based View Construction** 
+**Preview of HomePage() Class based View Construction:** 
 
 ```python
 class HomePage(View):
