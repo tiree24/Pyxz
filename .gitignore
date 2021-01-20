@@ -1,5 +1,4 @@
 /__pycached__/
 db.sqlite3
 static/
-.env
 local_settings.py

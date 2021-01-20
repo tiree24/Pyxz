@@ -1,15 +1,11 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>Welcome to all Pyxz **Tags** 🪐</h1>
 
 <ul>
-    {% for tag in taglist %}
-        <li><a href='/tag/{{tag.slug}}'>#{{tag}}</a></li>    
-    {% endfor %}
+  {% for tag in taglist %}
+  <li><a href="/tag/{{tag.slug}}">#{{tag}}</a></li>
+  {% endfor %}
 </ul>
 
 {% endblock %}
-
-

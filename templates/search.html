@@ -1,13 +1,14 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}{% block content %}
+
 <head>
   <style>
-    #user_container{
-      display:flex;
-      justify-content:center;
+    #user_container {
+      display: flex;
+      justify-content: center;
     }
-    #usr_box{
-      display:flex;
+    #usr_box {
+      display: flex;
       padding-top: 20px;
       align-items: center;
     }
@@ -20,12 +21,10 @@
 
 {% endif %} 
 
-<div class=container >
+<div class="container">
   <h1>Search Results</h1>
-  
-  <ul>
-    
 
+  <ul>
     <h3>User Names</h3>
     <div class="collection">
 
@@ -60,27 +59,17 @@
       {% endfor %}
     </div>
 
-  
     <h3>Image Titles</h3>
     <div class="collection">
-
-      {% for obj in new_list %} 
-        {% if obj.get_class_name == 'Image' %}
-            <a href="/img/{{obj.id}}/" class="collection-item">
-              <li>
-                <strong>
-                  {{ obj.title }}
-                </strong>
-              </li>
-            </a>
-        {% endif %}
-      {% endfor %}
+      {% for obj in new_list %} {% if obj.get_class_name == 'Image' %}
+      <a href="/img/{{obj.id}}/" class="collection-item">
+        <li>
+          <strong> {{ obj.title }} </strong>
+        </li>
+      </a>
+      {% endif %} {% endfor %}
     </div>
   </ul>
 </div>
 
 {% endblock %}
-  <!-- {% if obj.get_class_name == '' %}
-         <li>{{ obj. }}</li>
-  {% endif %} -->
-  

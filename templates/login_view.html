@@ -1,35 +1,35 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <head>
-    <style>
-        #container{
-            display:flex;
-            flex-direction:row;
-            justify-content: space-between;
-            margin:10px;
-            justify-content:center;
-            height:1000px;
-        }
-        .row{
-            margin: 10px;
-            height: 500px;
-            width: 500px;
-        }
-        .card{
-            margin: 10px;
-            height: 900px;
-            width: 500px;
-        }
-        .dganjoform{
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            margin: 100px;
-        }
-        
-    </style>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    #container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 10px;
+      justify-content: center;
+      height: 1000px;
+    }
+    .row {
+      margin: 10px;
+      height: 500px;
+      width: 500px;
+    }
+    .card {
+      margin: 10px;
+      height: 900px;
+      width: 500px;
+    }
+    .dganjoform {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 100px;
+    }
+  </style>
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />
 </head>
 
     <div id='container'>
@@ -61,6 +61,18 @@
     
         </form>
     </div>
+  </div>
+  <form method="POST" action="" class="dganjoform">
+    <nav class="nav-extended blue-grey">
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo center">Pyxz 📷</a>
+      </div>
+    </nav>
 
-   
+    {% csrf_token %} {{ form.as_p }}
+
+    <button type="submit" value="Post" class="btn btn-dark">Submit!</button>
+  </form>
+</div>
+
 {% endblock %}

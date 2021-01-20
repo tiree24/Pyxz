@@ -13,28 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-
-from user_app.views import HomePage, Profile, SignUp, OrderedView, FollowView,  UnFollowView, FollowUserView, FollowTagsView, TopView, EditFormView, SearchView, UsersPageView, UserFollowers
-
-from photo_app.views import AllTags, Image_view, TagCategory, ImageUpload, LikeUpView, LikeDownView, StoryUpload
 from auth_app.views import LoginFormView, LogoutView
-
-from comment_app.views import CommentLikeUpView, CommentLikeDownView
+from comment_app.views import CommentLikeDownView, CommentLikeUpView
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.contrib import admin
+from django.urls import path
+from photo_app.views import (AllTags, Image_view, ImageUpload, LikeDownView,
+                             LikeUpView, StoryUpload, TagCategory)
+from user_app.views import (EditFormView, FollowTagsView, FollowUserView,
+                            FollowView, HomePage, OrderedView, Profile,
+                            SearchView, SignUp, TopView, UnFollowView,
+                            UserFollowers, UsersPageView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomePage.as_view(), name = 'All'),
-    path('order/<str:order_by>/', OrderedView.as_view(), name = 'Ordered'),
+    path('', HomePage.as_view(), name ='All'),
+    path('order/<str:order_by>/', OrderedView.as_view(), name ='Ordered'),
     path('top/', TopView.as_view(), name='Top'),
     path("following/", FollowUserView.as_view()),
     path("followingtags/", FollowTagsView.as_view()),
     path('whoifollow/<int:user_id>/', UserFollowers.as_view()),
-    path('profile/<int:user_id>/', Profile.as_view(), name = 'Profile'),
+    path('profile/<int:user_id>/', Profile.as_view(), name ='Profile'),
     path('profile/edit', EditFormView),
     path('signup/', SignUp.as_view(), name='Signup'),
     path('listoftags/', AllTags.as_view(), name='Tags'),
@@ -53,4 +53,3 @@ urlpatterns = [
     path("search/", SearchView.as_view(), name='search'),
     path("users/", UsersPageView.as_view(), name='users'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-

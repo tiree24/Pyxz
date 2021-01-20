@@ -1,8 +1,8 @@
 from django.db import models
+from django.utils import timezone
+from taggit.managers import TaggableManager
 # Create your models here.
 from user_app.models import MyUser
-from taggit.managers import TaggableManager
-from django.utils import timezone
 
 
 class Image(models.Model):
@@ -18,12 +18,12 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+
     def score(self):
         return len(self.likes.all())
 
     def get_class_name(self):
         return self.__class__.__name__
-
 
 
 # Display for this many hours (int field)

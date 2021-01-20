@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from photo_app.models import Image, TaggableManager
 from photo_app.forms import ImageForm
 from user_app.models import MyUser
 from comment_app.forms import CommentForm
 from comment_app.models import Comment
 from django.views import View
-
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,17 +12,17 @@ from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponseRedirect
 
-from django.urls import reverse
+# Create your views here.
 
 
 class Image_view(View):
-    
+
     def get(self, request, img_id):
         form = CommentForm()
         i = Image.objects.get(id=img_id)
         t = i.tags.all()
         comments = Comment.objects.filter(photo_linked_id=img_id)
-        return render(request, "image_detail.html", {"i": i, "t": t, 'comments':comments, 'form': form})
+        return render(request, "image_detail.html", {"i": i, "t": t, 'comments': comments, 'form': form})
 
     def post(self, request, img_id):
         form = CommentForm(request.POST)
@@ -55,7 +54,7 @@ class TagCategory(View):
         """ Need this or a way to capture your photos .all() or .get()"""
         comments = Comment.objects.all()
         """ Need this """
-        return render(request, self.html, {'tag':tag,'img_set': img_set, 'comments': comments, 'form': self.form}) 
+        return render(request, self.html, {'tag': tag, 'img_set': img_set, 'comments': comments, 'form': self.form})
 
     def post(self, request, tag_title):
         form = CommentForm(request.POST)
@@ -68,8 +67,7 @@ class TagCategory(View):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
-class ImageUpload(LoginRequiredMixin,View):
+class ImageUpload(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     html = 'imageupload.html'
@@ -77,7 +75,6 @@ class ImageUpload(LoginRequiredMixin,View):
     def get(self, request):
         form = ImageForm()
         return render(request, 'imageupload.html', {'form': form})
-
 
     def post(self, request):
         form = ImageForm(request.POST, request.FILES)
@@ -90,7 +87,8 @@ class ImageUpload(LoginRequiredMixin,View):
             form.save_m2m()
             return HttpResponseRedirect(reverse('All'))
 
-class StoryUpload(LoginRequiredMixin,View):
+
+class StoryUpload(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     html = 'storyupload.html'
@@ -111,6 +109,7 @@ class StoryUpload(LoginRequiredMixin,View):
             form.save_m2m()
             return HttpResponseRedirect(reverse('All'))
 
+
 @login_required
 def LikeUpView(request, img_id):
     target = Image.objects.get(id=img_id)
@@ -119,6 +118,7 @@ def LikeUpView(request, img_id):
     print(target.likes.all)
     target.save()
     return redirect(request.META.get('HTTP_REFERER'))
+
 
 @login_required
 def LikeDownView(request, img_id):

@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+from local_settings import SECRET_KEY
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-from local_settings import SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['http://127.0.0.1:8000/', '*']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,18 +86,16 @@ DATABASES = {
     }
 }
 
-
-
 STATICFILES_DIRS = [
     BASE_DIR / "",
     '/static/i/',
 ]
 
 # Base url to serve media files
-#MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 
 # Path where media is stored
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

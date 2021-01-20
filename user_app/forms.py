@@ -1,6 +1,7 @@
 from django import forms
 from user_app.models import MyUser
 
+
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = MyUser
@@ -12,6 +13,7 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = MyUser
         fields = ['username', 'first_name', 'last_name', 'email', 'password', 'profile_pyxz', 'is_staff', 'is_superuser']
+
 
 
 class LoginForm(forms.Form):

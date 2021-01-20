@@ -1,29 +1,28 @@
 <style>
   .cardCustom {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  #addS{
-    display:flex;
+  #addS {
+    display: flex;
     align-self: center;
     margin: 10px;
   }
 </style>
 
 <a
-  id='addS'
+  id="addS"
   class="btn-floating btn-large waves-effect waves-light red"
-  href="/uploadstory">
+  href="/uploadstory"
+>
   <i class="material-icons">add</i>
 </a>
 
 {% load static %} {%for img in obj%}
 
-<a
-  href="/img/{{img.id}}">
-  
-  <div 
+<a href="/img/{{img.id}}">
+  <div
     class="cardCustom"
     style="height: 100px; width: auto; margin-top: 15px; padding: 10px;">
     <!-- Card Content -->

@@ -1,11 +1,11 @@
 from django.db import models
-
-from user_app.models import MyUser
-from photo_app.models import Image
-
 from django.utils import timezone
+from photo_app.models import Image
+from user_app.models import MyUser
 
 # Create your models here.
+
+
 class Comment(models.Model):
     author = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='author')
     photo_linked = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='photo_linked')
@@ -18,6 +18,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.text, self.author)
-    
+
     def score(self):
         return len(self.likes.all())
