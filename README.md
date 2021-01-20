@@ -1,26 +1,74 @@
 # Pyxz
 
-After cloning:
+**TEAM:**
+| Members | Description |
+| --- | --- |
+| Timothy Reynoso | Jack of all Trades :hammer_and_pick: [Portfolio](https://timothywebportfolio.web.app/). |
+| Marcus Chiriboga | marcuschiriboga@gmail.com |
+| Tracy DeWitt | justdewitt8485@gmail.com |
+| Tiree Jackson | tiree_jackson@yahoo.com |
+
+
+**After cloning:**
 
 - pipenv install django
 - pip install django-taggit
 - python -m pipenv install Pillow
 
-\*\* So currently the home page has the modal semi set up, i have it so if you want to exit the modal you must click on the photo
+**UX and WebApp Preview:**
 
-\*\*notice that the home screen has diffrent styling when compared to the other screens... that is because i am useing w3 css framework into the project! (dont worry everything is coded in so no new dependencies!) Now that I implymented that i might be able to use a more advanced framework that looks better... here are the docs for the one i used. -> https://www.w3schools.com/w3css/default.asp
 
-next should be:
+**Unique Functions:**
 
-1. adding a form to the modal to add new comments
-2. looping and displaying all comments in each photo
+- maths(current_time, post_time)
+  - Helper function that allows story's to 'delete' after 24 hours
+  
+- randomizer(random_list, choices, length)
+  - Helper function which enables you to select how many random unique items from a QuerySet you would like in a empty list which can be displayed on any view.
+  
+  
+```python
+def maths(current_time, post_time):
+    numofdays = current_time - post_time
+    return numofdays.days
 
-I'm confident you will me able to navigate through the rest because its stuff you all know :)
 
-we def need to start working on the forms so a user can add new photos/comments/like?/etc!
+def randomizer(random_list, choices, length):
+    while len(random_list) < min(len(choices), length):
+        choice = random.choice(choices)
+        if choice not in random_list:
+            random_list.append(choice)
+```
 
-have fun guys!!
+**Preview of HomePage() Class based View Construction:** 
 
-slack me with what you think so far i might be able to catch a meeting before 9am...MAYBE
+```python
+class HomePage(View):
 
-PS. if you could replicate what i did in the homepage everywhere pictures show up that would be cool... i can also do it later on.
+    html = 'homepage.html'
+    form = CommentForm()
+
+    def get(self, request):
+        comments = Comment.objects.all()
+        """ add this to views with all pictures except for stories """
+        img_set = Image.objects.filter(is_story=False).all()
+        # stories = Image.objects.filter(is_story=True).all()
+        current_time = datetime.datetime.now(pytz.utc)
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
+        tags = Image.tags.all()
+        random_tags = []
+        randomizer(random_tags, tags, 10)
+        five_random = []
+        randomizer(five_random, stories, 5)
+        context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags}
+        return render(request, self.html, context)
+
+    def post(self, request):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            img = Image.objects.get(photo=request.POST.get("title", ""))
+            model = Comment.objects.create(author=request.user, photo_linked=img, text=data['comment'])
+            model.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+```
