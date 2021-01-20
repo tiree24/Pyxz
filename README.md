@@ -1,5 +1,8 @@
 # Pyxz
 
+Outdated-NonPersistent database hosting example:
+https://new-pyxz.herokuapp.com/
+
 **TEAM:**
 | Members | Description |
 | --- | --- |
