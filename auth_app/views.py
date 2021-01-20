@@ -4,8 +4,6 @@ from django.views.generic import View
 
 from .forms import LoginForm
 
-# Create your views here.
-
 
 class LoginFormView(View):
 

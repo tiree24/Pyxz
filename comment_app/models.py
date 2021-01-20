@@ -3,8 +3,6 @@ from django.utils import timezone
 from photo_app.models import Image
 from user_app.models import MyUser
 
-# Create your models here.
-
 
 class Comment(models.Model):
     author = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='author')

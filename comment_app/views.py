@@ -4,9 +4,6 @@ from user_app.models import MyUser
 from comment_app.models import Comment
 
 from django.contrib.auth.decorators import login_required
-# Create your views here.
-
-# Create your views here.
 
 
 @login_required
