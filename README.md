@@ -11,9 +11,11 @@
 
 **After cloning:**
 
+```cli
 - pipenv install django
 - pip install django-taggit
 - python -m pipenv install Pillow
+```
 
 **UX and WebApp Preview:**
 - Homepage:
