@@ -11,9 +11,9 @@ from django.shortcuts import HttpResponseRedirect, render, reverse
 from django.views import View
 from django.views.generic import ListView
 from photo_app.models import Image
-from user_app.models import MyUser
 
 from user_app.forms import SignUpForm, UserEditForm
+from user_app.models import MyUser
 
 
 def maths(current_time, post_time):
@@ -42,9 +42,9 @@ class HomePage(View):
         stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        randomizer(random_tags,tags,10)
+        randomizer(random_tags, tags, 10)
         five_random = []
-        randomizer(five_random,stories,5)
+        randomizer(five_random, stories, 5)
         context = {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags}
         return render(request, self.html, context)
 
@@ -67,14 +67,14 @@ class OrderedView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().order_by(order_by)[::-1]
         current_time = datetime.datetime.now(pytz.utc)
-        
-        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
+
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        randomizer(random_tags,tags,10)
+        randomizer(random_tags, tags, 10)
         five_random = []
-        randomizer(five_random,stories,5)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags   })
+        randomizer(five_random, stories, 5)
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -95,8 +95,8 @@ class TopView(View):
         comments = Comment.objects.all()
         img_set = Image.objects.filter(is_story=False).all().annotate(like_count=Count('likes')).order_by('-like_count')
         current_time = datetime.datetime.now(pytz.utc)
-        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':stories   })
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': stories})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -121,13 +121,13 @@ class FollowUserView(LoginRequiredMixin, View):
         img_set = Image.objects.filter(is_story=False).all().filter(myuser_id__in=following).all()
         current_time = datetime.datetime.now(pytz.utc)
 
-        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time,img.post_time) <= 1]
+        stories = [img for img in Image.objects.filter(is_story=True).all() if maths(current_time, img.post_time) <= 1]
         tags = Image.tags.all()
         random_tags = []
-        randomizer(random_tags,tags,10)
+        randomizer(random_tags, tags, 10)
         five_random = []
-        randomizer(five_random,stories,5)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories':five_random, 'taglist':random_tags})
+        randomizer(five_random, stories, 5)
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -157,7 +157,7 @@ class FollowTagsView(LoginRequiredMixin, View):
         randomizer(random_tags, tags, 10)
         five_random = []
         randomizer(five_random, stories, 5)
-        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist':random_tags})
+        return render(request, self.html, {'img_set': img_set, 'comments': comments, 'form': self.form, 'stories': five_random, 'taglist': random_tags})
 
     def post(self, request):
         form = CommentForm(request.POST)
@@ -183,7 +183,7 @@ class Profile(View):
         img_set = Image.objects.filter(is_story=False).all().filter(myuser=user)
         """ Need this or a way to capture your photos .all() or .get()"""
         comments = Comment.objects.all()
-        return render(request, self.html, {'user': user,  'img_set': img_set, 'comments': comments, 'form': self.form })
+        return render(request, self.html, {'user': user,  'img_set': img_set, 'comments': comments, 'form': self.form})
 
     """ Copy the post() function fully """
     def post(self, request, user_id):
@@ -224,14 +224,13 @@ class SignUp(View):
 @login_required
 def EditFormView(request):
     if request.POST:
-        form = UserEditForm(request.POST, request.FILES)
+        form = UserEditForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            # data = form.cleaned_data
+            data = form.cleaned_data
             custom_form = form.save(commit=False)
             custom_form.save()
             form.save_m2m()
             u = MyUser.objects.get(id=request.user.id)
-            # u['profile_pyxz'  ] = request.POST['profile_pyxz'][0]
             u.save()
             return HttpResponseRedirect(f'/profile/{request.user.id}/')
     else:
