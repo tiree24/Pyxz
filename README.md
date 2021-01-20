@@ -6,21 +6,25 @@ After cloning:
 - pip install django-taggit
 - python -m pipenv install Pillow
 
-\*\* So currently the home page has the modal semi set up, i have it so if you want to exit the modal you must click on the photo
 
-\*\*notice that the home screen has diffrent styling when compared to the other screens... that is because i am useing w3 css framework into the project! (dont worry everything is coded in so no new dependencies!) Now that I implymented that i might be able to use a more advanced framework that looks better... here are the docs for the one i used. -> https://www.w3schools.com/w3css/default.asp
+**Unique Functions**
 
-next should be:
+- maths(current_time, post_time)
+  - Helper function that allows story's to 'delete' after 24 hours
+  
+- randomizer(random_list, choices, length)
+  - Helper function which enables you to select how many random unique items from a QuerySet you would like in a empty list which can be displayed on any view.
+  
+  
+```python
+def maths(current_time, post_time):
+    numofdays = current_time - post_time
+    return numofdays.days
 
-1. adding a form to the modal to add new comments
-2. looping and displaying all comments in each photo
 
-I'm confident you will me able to navigate through the rest because its stuff you all know :)
-
-we def need to start working on the forms so a user can add new photos/comments/like?/etc!
-
-have fun guys!!
-
-slack me with what you think so far i might be able to catch a meeting before 9am...MAYBE
-
-PS. if you could replicate what i did in the homepage everywhere pictures show up that would be cool... i can also do it later on.
+def randomizer(random_list, choices, length):
+    while len(random_list) < min(len(choices), length):
+        choice = random.choice(choices)
+        if choice not in random_list:
+            random_list.append(choice)
+```
