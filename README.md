@@ -1,5 +1,14 @@
 # Pyxz
 
+**TEAM:**
+| Member | Description |
+| --- | --- |
+| Timothy Reynoso | Jack of all Trades :hammer_and_pick: [Portfolio](https://timothywebportfolio.web.app/). |
+| Marcus Chiriboga | marcuschiriboga@gmail.com |
+| Tracy DeWitt | justdewitt8485@gmail.com |
+| Tiree Jackson | tiree_jackson@yahoo.com |
+
+
 **After cloning:**
 
 - pipenv install django
