@@ -1,13 +1,105 @@
 {%extends 'base.html'%}
 {% load static %}
 {% block content %}
+<style>
+  .container{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+  }
+</style>
+
+<nav style='background-color:#8d9fa9; width:70%;margin-top:15px;margin-left:15%;margin-right: 15%;'>
+  <div class="nav-wrapper">
+    <a href="/profile/{{i.myuser.id}}/" class="brand-logo right">{{i.title}} By: {{i.myuser.username}}
+      <i class="material-icons">timeline</i>
+    </a>
+    <!-- <a href="#" class="brand-logo left">#{{tag}} Sub-Pyxz -->
+    <!-- </a> -->
+  </div>
+</nav>
 <div class='container'>
-<h2>Title: {{i.title}}</h3>
-<h4> by: <a href="/profile/{{i.myuser.id}}/">{{i.myuser.username}}</a> at: {{i.post_time}}</h4>
+
+      <img class='x2 z-depth-3' style='height:auto; width:50%;' src="{% static i.photo.url %}" alt="My image">
+
+      <div class="col s12 m7">
+        <h2 class="header">Comments</h2>
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+              <div class="collection">
+                
+                {% for comment in comments %} 
+                      {% if comment.photo_linked == i %}
+                        
+                          <a href="/profile/{{comment.author.id}}" class="collection-item">{{comment.text}} Written By: {{comment.author}}</a>
+                        
+
+                        <div class="score_comment">
+                          <a href="/commentlikeup/{{comment.id}}/"><button>up</button></a>
+                          {{comment.score}}
+                          <a href="/commentlikedown/{{comment.id}}/"><button>down</button></a>
+                        </div>
+                  {% endif %} {% endfor %}
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style='height:auto; width:100%; margin-left: 10%;'>
+        <div class="col s12 m6">
+          <div class="card">
+            <div class="card-content">
+              
+              <p class=left style='height:auto; width: 50%;margin:5px; margin-right: 100%;'>{{i.post_time}}</p>
+              <h6>Tags:<h6>
+                <div class="collection">
+                  {%for tag in t%}
+                  <a  href='/tag/{{tag.slug}}' class="collection-item">#{{tag}}</a>
+                  {%endfor%} 
+                </div>
+                
+                
+                
+                <h6>Description:</h6>
+                <p style='margin:8px;'>{{i.description}}</p>
+                
+                
+                <div class="score">
+                  <a href="/likeup/{{i.id}}/"><button>up</button></a>
+                  {{i.score}}
+                  <a href="/likedown/{{i.id}}/"><button>down</button></a>
+                </div>
+                
+                <form method="POST" action="">
+                  {% csrf_token %} {{ form.as_table }}
+                  <input type="hidden" name="title" value="{{ i.photo }}" />
+                  <a>
+                    <button type="submit" value="Post" class="btn-floating halfway-fab waves-effect waves-light red">
+                      <i class="material-icons">add</i>
+                    </button>
+                  </a>
+                </form>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
 
 
-<img class='x2' style='height:auto; width:60vw' src="{% static i.photo.url %}" alt="My image">
+    
+  </div>
+</div>
 
+
+
+
+
+<!-- <h6 class=left style='height:auto; width: 50%; margin-right: 100%;'> Created at: {{i.post_time}}</h6>
 <p>tags:<p>
 {%for tag in t%}
 <li ><a  href='/tag/{{tag.slug}}'>#{{tag}}</a></li>
@@ -43,5 +135,5 @@
         {% endif %} {% endfor %}
     </div>
   </div>
-</div>
+</div> -->
 {% endblock %}

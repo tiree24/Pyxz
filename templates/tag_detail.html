@@ -1,11 +1,25 @@
 {% extends 'base.html' %} {% block content %}
+<style>
+  .container{
+    margin-top: 20px;
+  }
+</style>
+
 <div class="container">
-<h1>Welcome to #{{tag}}!</h1>
-<h3 class="title">All Pyxz's with</h3>
-<br />
-{% load static %}
-<div>
-  {% include 'card_partial.html' with obj=img_set comments=comments form=form %}
+  <!-- <h1>Welcome to #{{tag}}!</h1>
+  <h3 class="title">All Pyxz's with</h3>
+  <br /> -->
+  <nav style='background-color:#8d9fa9'>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo left">#{{tag}} Sub-Pyxz
+        <i class="material-icons">explore</i>
+      </a>
+      
+    </div>
+  </nav>
+  {% load static %}
+  <div>
+    {% include 'card_partial.html' with obj=img_set comments=comments form=form %}
+  </div>
 </div>
 {% endblock %}
-</div>

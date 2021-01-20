@@ -23,8 +23,8 @@
   {% if user.get_profilepic_status == True %}
     <div id='user_container'>
 
-      <div class="collection" style='width: 500px;'>
-        <a  href="/profile/{{user.id}}/"  class="collection-item avatar">
+      <div class="collection z-depth-3" style='width: 500px;'>
+        <a  href="/profile/{{user.id}}/"  class="collection-item avatar ">
           <ul>
             <li id='usr_box'>
               <img
@@ -45,7 +45,7 @@
     {% else %}
     <div id='user_container'>
 
-      <div class="collection" style='width: 500px;'>
+      <div class="collection z-depth-3" style='width: 500px;'>
         <a  href="/profile/{{user.id}}/"  class="collection-item avatar">
           <ul>
             <li id='usr_box'>
