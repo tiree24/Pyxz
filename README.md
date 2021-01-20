@@ -1,7 +1,7 @@
 # Pyxz
 
 **TEAM:**
-| Member | Description |
+| Members | Description |
 | --- | --- |
 | Timothy Reynoso | Jack of all Trades :hammer_and_pick: [Portfolio](https://timothywebportfolio.web.app/). |
 | Marcus Chiriboga | marcuschiriboga@gmail.com |
