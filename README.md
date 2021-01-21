@@ -1,5 +1,8 @@
 # Pyxz
 
+Outdated-NonPersistent database hosting example:
+https://new-pyxz.herokuapp.com/
+
 **TEAM:**
 | Members | Description |
 | --- | --- |
@@ -11,11 +14,29 @@
 
 **After cloning:**
 
+```cli
 - pipenv install django
 - pip install django-taggit
 - python -m pipenv install Pillow
+```
 
 **UX and WebApp Preview:**
+- Homepage:
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/homescreen.png?raw=true)
+- Profile:
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/profile.png?raw=true)
+- Sub-Pyxz! (like Sub-Reddits):
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/subpyxz.png?raw=true)
+- Image Details + Comments:
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/storydetail.png?raw=true)
+- StoryUpload:
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/uploadstory.png?raw=true)
+- Login:
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/login.png?raw=true)
+- All Users:
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/users.png?raw=true)
+- Search:
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/searchresults.png?raw=true)
 
 
 **Unique Functions:**
