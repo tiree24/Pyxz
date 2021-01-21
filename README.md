@@ -19,6 +19,9 @@ https://new-pyxz.herokuapp.com/
 - pip install django-taggit
 - python -m pipenv install Pillow
 ```
+**Our Quick Mockup:**
+- The Vision:
+![alt text](https://github.com/tiree24/Pyxz/blob/main/ReadmeImages/mockup.png?raw=true)
 
 **UX and WebApp Preview:**
 - Homepage:
